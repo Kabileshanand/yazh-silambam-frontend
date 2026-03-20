@@ -621,8 +621,28 @@ h6 {
 
 /* ── Achievements / Wall of Fame Page ── */
 .achievements-page {
-  background: var(--charcoal-grey);
+  background: #000000;
   min-height: 100vh;
+  position: relative;
+}
+
+.achievements-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  display: block;
+}
+ 
+/* 3. ADD — keep all content above the canvas */
+.achievements-hero-banner,
+.achievements-hero-content,
+.page-container {
+  position: relative;
+  z-index: 1;
 }
 
 .achievements-hero-banner {

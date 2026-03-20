@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Award } from 'lucide-react';
+import { Trophy, Award } from 'lucide-react';
 const img1 = '/images/studentsimg/R Devendran.jpeg';
 
 
@@ -40,6 +40,108 @@ const StudentPhoto = ({ name, photo }) => {
 };
 
 const Achievements = () => {
+    const canvasRef = useRef(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let animFrame;
+        let offset = 0;
+
+        const resize = () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const draw = () => {
+            const w = canvas.width;
+            const h = canvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            const step = 20;
+            const bigStep = 100;
+            offset = (offset + 0.3) % bigStep;
+
+            // Fine grid
+            ctx.strokeStyle = 'rgba(22,22,22,1)';
+            ctx.lineWidth = 0.5;
+            for (let x = (offset % step); x < w + step; x += step) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = (offset % step); y < h + step; y += step) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            // Bold grid
+            ctx.strokeStyle = 'rgba(30,30,30,1)';
+            ctx.lineWidth = 1;
+            for (let x = (offset % bigStep); x < w + bigStep; x += bigStep) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = (offset % bigStep); y < h + bigStep; y += bigStep) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            // Pulsing rings
+            const cx = w / 2;
+            const cy = h / 2;
+            const t = Date.now() / 1000;
+            [80, 180, 300, 440].forEach((baseR, i) => {
+                const r = baseR + Math.sin(t * 0.6 + i) * 30;
+                const alpha = 0.06 + Math.sin(t * 0.4 + i * 1.2) * 0.04;
+                ctx.strokeStyle = `rgba(192,57,43,${alpha})`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            });
+
+            // Floating ember dots
+            const dots = [
+                { bx: 0.15, by: 0.12, speed: 0.7, phase: 0 },
+                { bx: 0.38, by: 0.08, speed: 0.5, phase: 1.5 },
+                { bx: 0.65, by: 0.11, speed: 0.8, phase: 3 },
+                { bx: 0.82, by: 0.18, speed: 0.6, phase: 0.8 },
+                { bx: 0.92, by: 0.35, speed: 0.9, phase: 2.2 },
+                { bx: 0.08, by: 0.55, speed: 0.5, phase: 4 },
+                { bx: 0.95, by: 0.65, speed: 0.7, phase: 1 },
+                { bx: 0.28, by: 0.88, speed: 0.6, phase: 3.5 },
+            ];
+            dots.forEach(d => {
+                const dx = Math.sin(t * d.speed + d.phase) * 8;
+                const dy = Math.cos(t * d.speed * 0.7 + d.phase) * 10;
+                const x = d.bx * w + dx;
+                const y = d.by * h + dy;
+                const alpha = 0.4 + Math.sin(t * d.speed + d.phase) * 0.3;
+                ctx.fillStyle = `rgba(231,76,60,${alpha})`;
+                ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = `rgba(231,76,60,${alpha * 0.4})`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y - 14); ctx.stroke();
+            });
+
+            // Scan line
+            const scanY = ((t * 60) % (h + 40)) - 20;
+            const scanGrad = ctx.createLinearGradient(0, scanY - 2, 0, scanY + 2);
+            scanGrad.addColorStop(0, 'rgba(192,57,43,0)');
+            scanGrad.addColorStop(0.5, 'rgba(192,57,43,0.1)');
+            scanGrad.addColorStop(1, 'rgba(192,57,43,0)');
+            ctx.fillStyle = scanGrad;
+            ctx.fillRect(0, scanY - 2, w, 4);
+
+            animFrame = requestAnimationFrame(draw);
+        };
+
+        draw();
+        return () => {
+            cancelAnimationFrame(animFrame);
+            window.removeEventListener('resize', resize);
+        };
+    }, []);
+
     const achievementSections = [
         {
             title: "School Education Department (RDS & BDS)",
@@ -123,6 +225,12 @@ const Achievements = () => {
     return (
         <div className="achievements-page">
 
+            {/* ── Animated Background Canvas ── */}
+            <canvas
+                ref={canvasRef}
+                className="achievements-bg-canvas"
+            />
+
             {/* ── Hero Banner Image ── */}
             <div className="achievements-hero-banner">
                 <img
@@ -205,13 +313,20 @@ const Achievements = () => {
                                                     </span>
                                                 </td>
                                                 <td className="py-4 px-4">
-                                                    <span className={`font-semibold flex items-center gap-2 ${row.result.toLowerCase().includes('1st')
-                                                        ? 'text-[#EB4C4C]'
-                                                        : row.result.toLowerCase().includes('2nd')
-                                                            ? 'text-gray-300'
-                                                            : 'text-orange-400'
-                                                        }`}>
-                                                        <Medal size={16} /> {row.result}
+                                                    <span className={`font-semibold flex items-center gap-2 ${
+                                                        row.result.toLowerCase().includes('1st')
+                                                            ? 'text-[#EB4C4C]'
+                                                            : row.result.toLowerCase().includes('2nd')
+                                                                ? 'text-gray-300'
+                                                                : 'text-orange-400'
+                                                    }`}>
+                                                        <span style={{ fontSize: '1.1rem' }}>
+                                                            {row.result.toLowerCase().includes('1st') ? '🥇' :
+                                                             row.result.toLowerCase().includes('2nd') ? '🥈' :
+                                                             row.result.toLowerCase().includes('3rd') ? '🥉' :
+                                                             '🏅'}
+                                                        </span>
+                                                        {row.result}
                                                     </span>
                                                 </td>
                                             </motion.tr>
