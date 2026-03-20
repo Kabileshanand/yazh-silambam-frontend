@@ -126,7 +126,7 @@ const Achievements = () => {
             {/* ── Hero Banner Image ── */}
             <div className="achievements-hero-banner">
                 <img
-                    src="/images/elite-performers.png"
+                    src="/wall of fame banner.png"
                     alt="Elite Performers"
                     className="achievements-hero-img"
                 />
