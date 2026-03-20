@@ -5,30 +5,37 @@ const weapons = [
   {
     title: 'Aayutha Kambu',
     desc: 'Aayutha Kambu refers to specialized weapon staffs with unique designs and attachments. Varieties include: Vel Kambu (spear-tipped staff for thrusting), Laddu Kambu (weighted ball ends for impact), Chandhiran Suriyan (moon-sun symbolic blades), and Arai Kambu (half-staff hybrids). Each trains specific strikes, spins, and handling for versatile combat.',
+    image: '/images/weaponry/Vel Kambu.jpg',
   },
   {
     title: 'Surul',
     desc: 'Surul (Surul Vaal) is a flexible, whip-like sword (coiled blade) used in advanced Silambam. It lashes out with unpredictable, snake-like strikes over distance. Dangerous and precise, it requires expert control to avoid self-injury while delivering fast, whipping attacks and entanglements.',
+    image: '/images/weaponry/Surul.jpg',
   },
   {
     title: 'Vaal Veechu',
     desc: 'Vaal Veechu is the art of sword wielding and cutting techniques. It covers single or double sword flows, slashes, parries, and thrusts. Emphasizing fluid motion and precision, it develops lethal edge control, timing, and integration with footwork for battlefield effectiveness.',
+    image: '/images/weaponry/Vaal.jpg',
   },
   {
     title: 'Patta Katthi',
     desc: 'Patta Katthi involves broad-bladed sword fighting, focusing on powerful sweeping cuts and heavy strikes. The wide blade allows for strong blocks and devastating chops. It trains raw power, endurance, and tactical use in close-to-medium range combat.',
+    image: '/images/weaponry/Patta Katthi.jpg',
   },
   {
     title: 'Sanna Katthi',
     desc: 'Sanna Katthi refers to slim dagger or small knife techniques in Silambam. It specializes in quick, precise stabs, slashes, and close-quarters defense. Ideal for concealed carry and rapid responses, it enhances agility and targeting vital areas.',
+    image: '/images/weaponry/Sanna Katthi.jpg',
   },
   {
     title: 'Maan Kombu',
     desc: 'Maan Kombu (deer horns) is a traditional dual-weapon resembling blackbuck antlers. Worn on hands or held, it enables hooking, trapping, and piercing attacks. It combines grappling with sharp strikes, drawing from animal-inspired Tamil combat for unique defense.',
+    image: '/images/weaponry/Maan Kombu.jpg',
   },
   {
     title: 'Kendai - Kodari',
     desc: 'Kendai and Kodari are hooked or curved weapons (often sickle-like or axe-headed) for pulling, slashing, and close attacks. They emphasize complex body mechanics, leverage, and weapon trapping to disarm or control opponents in dynamic combat scenarios.',
+    image: '/images/weaponry/Kendai Kodari.jpg',
   },
 ];
 
@@ -59,7 +66,11 @@ const WeaponryTraining = () => {
             className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
           >
             <div className="stick-showcase-media">
-              <div className="stick-showcase-placeholder">Image Coming Soon</div>
+              <img
+                src={weapon.image}
+                alt={weapon.title}
+                className="stick-showcase-image"
+              />
             </div>
             <div className="stick-showcase-content">
               <h2 className="stick-showcase-title">{weapon.title}</h2>

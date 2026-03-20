@@ -5,26 +5,32 @@ const coreTechniques = [
   {
     title: 'Nadu Kambu Varisai',
     desc: 'Nadu Kambu Varisai is the core spinning technique where the stick rotates from its center (middle grip). Practitioners perform continuous circles and figures with high speed and control. It develops wrist strength, coordination, fluidity, and the foundational rhythm needed for advanced spins and combat transitions.',
+    image: '/images/stick-fencing/Nadu Kambu.jpg',
   },
   {
     title: 'Nedung Kambu Varisai',
     desc: 'Nedung Kambu Varisai involves spinning the staff from about 3/4 length (off-center grip toward one end). This creates wider, more dynamic arcs and faster rotations. It trains advanced control, balance, and power generation for longer-range strikes and defensive sweeps.',
+    image: '/images/stick-fencing/Nedung Kambu.jpg',
   },
   {
     title: 'Kadai Kambu Varisai',
     desc: 'Kadai Kambu Varisai focuses on spinning from the bottom/end of the stick (grip near one tip). It produces tight, rapid spins ideal for close-quarters defense and quick counters. This method enhances grip strength, precision, and the ability to transition seamlessly between spins and thrusts.',
+    image: '/images/stick-fencing/Kadai Kambu.jpg',
   },
   {
     title: 'Rettai Kambu Varisai',
     desc: 'Rettai Kambu Varisai teaches dual-stick handling and spinning (two short or medium staffs). It doubles offensive and defensive options, allowing simultaneous blocks and attacks. Practitioners learn coordination between both hands, creating complex patterns for superior combat versatility.',
+    image: '/images/stick-fencing/Rettai Kambu.jpg',
   },
   {
     title: 'Thee Silambam',
     desc: 'Thee Silambam (Fire Silambam) is an advanced, spectacular demonstration form using staffs with fire tips or flaming ends. It combines spinning, strikes, and flows with fire for visual impact and cultural performances. It demands exceptional skill, focus, timing, and safety awareness.',
+    image: '/images/stick-fencing/Thee Silambam.jpg',
   },
   {
     title: 'Sparring',
     desc: 'Sparring (or free combat practice) applies all stick techniques in controlled fighting. Students engage in realistic exchanges with protective gear, focusing on timing, distance, strategy, and respect. It bridges forms to real application, building confidence, adaptability, and sportsmanship.',
+    image: '/images/stick-fencing/Sparing.jpg',
   },
 ];
 
@@ -32,18 +38,22 @@ const alangara = [
   {
     title: 'Ribbon Stick',
     desc: 'Ribbon Stick involves tying colorful ribbons to the top and bottom of the staff, then spinning it in intricate patterns. The ribbons create beautiful visual trails, enhancing spectacle during performances. It highlights grace, rhythm, and precision while showcasing Tamil artistic tradition.',
+    image: '/images/stick-fencing/Ribbon Stick.jpg',
   },
   {
     title: 'Padal',
     desc: 'Padal, or Star Silambam, is a high-skill freestyle technique with rapid, continuous rotations forming star-like patterns. The staff moves in multi-directional orbits at high speed, requiring exceptional wrist dexterity, timing, and body control for mesmerizing displays.',
+    image: '/images/stick-fencing/Padal.jpg',
   },
   {
     title: 'Poo Pandhu',
     desc: 'Poo Pandhu is a specialized advanced form similar to Padal, using a ball (or weighted object) tied by rope to the staff end. Spinning creates flower-like or orbiting motions with added momentum. It trains balance, centrifugal force control, and artistic flair for performances.',
+    image: '/images/stick-fencing/Poo Pandhu.jpg',
   },
   {
     title: 'Tharasu',
     desc: 'Tharasu is an advanced balance-focused technique emphasizing equilibrium during complex spins and poses. Practitioners hold extended positions or perform one-legged spins while maintaining perfect control. It builds core strength, concentration, and mastery over body dynamics.',
+    image: '/images/stick-fencing/Tharasu.jpg',
   },
 ];
 
@@ -59,7 +69,11 @@ const TechniqueList = ({ techniques, startIndex = 0 }) => (
         className={`stick-showcase ${(startIndex + index) % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
       >
         <div className="stick-showcase-media">
-          <div className="stick-showcase-placeholder">Image Coming Soon</div>
+          <img
+            src={technique.image}
+            alt={technique.title}
+            className="stick-showcase-image"
+          />
         </div>
         <div className="stick-showcase-content">
           <h2 className="stick-showcase-title">{technique.title}</h2>
