@@ -1,40 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Sword, GripVertical } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const scrollGradientStyle = {
-    background: 'linear-gradient(135deg, #EB4C4C 0%, #ffffff 40%, #EB4C4C 80%, #ffffff 100%)',
-    backgroundSize: '300% 300%',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-};
-
-const ScrollGradientText = ({ as: Tag = 'p', className, style, children }) => {
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const onScroll = () => {
-            const rect = el.getBoundingClientRect();
-            const vh = window.innerHeight;
-            const progress = Math.min(Math.max((vh - rect.top) / (vh + rect.height), 0), 1);
-            const pos = Math.round(progress * 100);
-            el.style.backgroundPosition = `${pos}% ${pos}%`;
-        };
-        onScroll();
-        window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
-    }, []);
-
-    return (
-        <Tag ref={ref} className={className} style={{ ...scrollGradientStyle, ...style }}>
-            {children}
-        </Tag>
-    );
-};
 
 const Home = () => {
     return (
@@ -60,15 +27,15 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="hero-text-container"
                     >
-                        <ScrollGradientText as="h1" className="hero-title">
-                            Yazh Silambam Academy
-                        </ScrollGradientText>
-                        <ScrollGradientText as="p" className="hero-subtitle">
+                        <h1 className="hero-title">
+                            <span className="font-tamil title-prefix text-gold">Yazh</span> Silambam Academy
+                        </h1>
+                        <p className="hero-subtitle">
                             Knowledge · Strength · Tradition
-                        </ScrollGradientText>
-                        <ScrollGradientText as="p" style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                        </p>
+                        <p className="hero-tagline" style={{ color: '#ccc', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
                             Where Ancient Tamil Warrior Spirit Meets Modern Discipline
-                        </ScrollGradientText>
+                        </p>
                     </motion.div>
                 </div>
             </section>
@@ -83,15 +50,10 @@ const Home = () => {
                         viewport={{ once: true }}
                         className="glass-panel about-panel text-center"
                     >
-                        <ScrollGradientText as="h2" className="section-title">
-                            Who We Are
-                        </ScrollGradientText>
-                        <ScrollGradientText as="p" className="about-text" style={{ maxWidth: '800px', margin: '0 auto' }}>
-                            Yazh Silambam Academy is dedicated to preserving the ancient Tamil martial art of Silambam
-                            while building discipline, fitness, focus, and cultural pride in every student. We train
-                            children, youth, women, and adults in a safe, respectful environment, blending tradition
-                            with modern teaching methods.
-                        </ScrollGradientText>
+                        <h2 className="section-title">Who We Are</h2>
+                        <p className="about-text" style={{ maxWidth: '800px', margin: '0 auto' }}>
+                            <span className="text-gold font-bold">Yazh Silambam Academy</span> is dedicated to preserving the ancient Tamil martial art of Silambam while building discipline, fitness, focus, and cultural pride in every student. We train children, youth, women, and adults in a safe, respectful environment, blending tradition with modern teaching methods.
+                        </p>
                     </motion.div>
                 </div>
             </section>
@@ -99,9 +61,7 @@ const Home = () => {
             {/* What We Provide */}
             <section className="section-padding bg-dark-overlay">
                 <div className="container">
-                    <ScrollGradientText as="h2" className="section-title">
-                        What We Provide
-                    </ScrollGradientText>
+                    <h2 className="section-title">What We Provide</h2>
                     <div className="feature-grid">
                         {[
                             {
@@ -122,26 +82,36 @@ const Home = () => {
                                 desc: "Progress to traditional weapons plus cultural performances, and demonstrations that celebrate Tamil heritage",
                                 link: "/weaponry-training"
                             }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: index * 0.2 }}
-                                viewport={{ once: true }}
-                                className="glass-card feature-card"
-                            >
-                                <Link to={item.link} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                                    <div className="feature-icon-wrapper">{item.icon}</div>
-                                    <ScrollGradientText as="h3" className="feature-title">
-                                        {item.title}
-                                    </ScrollGradientText>
-                                    <ScrollGradientText as="p" className="feature-desc">
-                                        {item.desc}
-                                    </ScrollGradientText>
-                                </Link>
-                            </motion.div>
-                        ))}
+                        ].map((item, index) => {
+                            const CardContent = () => (
+                                <>
+                                    <div className="feature-icon-wrapper">
+                                        {item.icon}
+                                    </div>
+                                    <h3 className="feature-title">{item.title}</h3>
+                                    <p className="feature-desc">{item.desc}</p>
+                                </>
+                            );
+
+                            return (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: index * 0.2 }}
+                                    viewport={{ once: true }}
+                                    className="glass-card feature-card"
+                                >
+                                    {item.link ? (
+                                        <Link to={item.link} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+                                            <CardContent />
+                                        </Link>
+                                    ) : (
+                                        <CardContent />
+                                    )}
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -156,20 +126,18 @@ const Home = () => {
                         viewport={{ once: true }}
                         className="glass-panel"
                     >
-                        <ScrollGradientText as="h2" className="section-title">
-                            Why Choose Yazh Silambam?
-                        </ScrollGradientText>
+                        <h2 className="section-title">Why Choose Yazh Silambam?</h2>
                         <ul className="why-choose-list" style={{ listStyle: 'none', padding: 0, marginTop: '1.5rem', textAlign: 'center' }}>
                             {[
-                                "Experienced instructors",
-                                "Beginner to advanced levels",
-                                "Separate methods for kids / women / adults",
-                                "Focus on discipline & anti-bullying confidence",
-                                "Regular events, demos & competitions"
-                            ].map((text, index) => (
+                                { icon: "✓", text: "Experienced instructors" },
+                                { icon: "✓", text: "Beginner to advanced levels" },
+                                { icon: "✓", text: "Separate methods for kids / women / adults" },
+                                { icon: "✓", text: "Focus on discipline & anti-bullying confidence" },
+                                { icon: "✓", text: "Regular events, demos & competitions" }
+                            ].map((item, index) => (
                                 <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '1rem', fontSize: '1.1rem' }}>
-                                    <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>✓</span>
-                                    <ScrollGradientText as="span">{text}</ScrollGradientText>
+                                    <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>{item.icon}</span>
+                                    <span style={{ color: '#e5e5e5' }}>{item.text}</span>
                                 </li>
                             ))}
                         </ul>
@@ -188,13 +156,10 @@ const Home = () => {
                         className="text-center"
                         style={{ maxWidth: '550px', margin: '0 auto' }}
                     >
-                        <ScrollGradientText as="h2" className="section-title mb-6">
-                            Ready to Begin Your Journey?
-                        </ScrollGradientText>
-                        <ScrollGradientText as="p" className="about-text mb-8">
-                            Join us and become part of a legacy that spans centuries. Experience the power, discipline,
-                            and cultural richness of Silambam.
-                        </ScrollGradientText>
+                        <h2 className="section-title mb-6">Ready to Begin Your Journey?</h2>
+                        <p className="about-text mb-8">
+                            Join us and become part of a legacy that spans centuries. Experience the power, discipline, and cultural richness of Silambam.
+                        </p>
                         <div className="flex gap-4 flex-wrap justify-center">
                             <Link to="/contact" className="btn-primary hero-cta">
                                 Join the Legacy
