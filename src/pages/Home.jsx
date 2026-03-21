@@ -3,17 +3,28 @@ import { motion } from 'framer-motion';
 import { Shield, Sword, GripVertical } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const gradientStyle = (progress) => {
+    const pos = Math.round(progress * 120);
+    return {
+        backgroundImage: `linear-gradient(135deg, #EB4C4C ${pos}%, #ffffff ${pos + 40}%, #EB4C4C 100%)`,
+        backgroundSize: '200% auto',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        backgroundClip: 'text',
+    };
+};
+
 const useScrollGradient = () => {
     const ref = useRef(null);
     useEffect(() => {
         const el = ref.current;
         if (!el) return;
         const onScroll = () => {
-            const scrollY = window.scrollY;
-            const maxScroll = window.innerHeight;
-            const progress = Math.min(scrollY / maxScroll, 1);
-            const start = Math.round(progress * 100);
-            el.style.backgroundImage = `linear-gradient(135deg, #EB4C4C ${start}%, #ffffff ${start + 40}%, #EB4C4C 100%)`;
+            const rect = el.getBoundingClientRect();
+            const vh = window.innerHeight;
+            const progress = Math.min(Math.max(1 - rect.top / vh, 0), 1);
+            const pos = Math.round(progress * 120);
+            el.style.backgroundImage = `linear-gradient(135deg, #EB4C4C ${pos}%, #ffffff ${pos + 40}%, #EB4C4C 100%)`;
             el.style.backgroundSize = '200% auto';
             el.style.webkitBackgroundClip = 'text';
             el.style.webkitTextFillColor = 'transparent';
@@ -26,9 +37,16 @@ const useScrollGradient = () => {
     return ref;
 };
 
+const GradientText = ({ as: Tag = 'p', className, style, children }) => {
+    const ref = useScrollGradient();
+    return (
+        <Tag ref={ref} className={className} style={{ ...style, ...gradientStyle(0) }}>
+            {children}
+        </Tag>
+    );
+};
+
 const Home = () => {
-    const gradientTitleRef = useScrollGradient();
-    const gradientTaglineRef = useScrollGradient();
     return (
         <div className="home-page">
             {/* Hero Section */}
@@ -52,15 +70,15 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="hero-text-container"
                     >
-                        <h1 className="hero-title" ref={gradientTitleRef} style={{ backgroundImage: 'linear-gradient(135deg, #EB4C4C 0%, #ffffff 40%, #EB4C4C 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                        <GradientText as="h1" className="hero-title">
                             Yazh Silambam Academy
-                        </h1>
-                        <p className="hero-subtitle">
+                        </GradientText>
+                        <GradientText as="p" className="hero-subtitle">
                             Knowledge · Strength · Tradition
-                        </p>
-                        <p ref={gradientTaglineRef} style={{ fontSize: '1.1rem', marginBottom: '1.5rem', backgroundImage: 'linear-gradient(135deg, #EB4C4C 0%, #ffffff 40%, #EB4C4C 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                        </GradientText>
+                        <GradientText as="p" style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
                             Where Ancient Tamil Warrior Spirit Meets Modern Discipline
-                        </p>
+                        </GradientText>
                     </motion.div>
                 </div>
             </section>
@@ -75,10 +93,13 @@ const Home = () => {
                         viewport={{ once: true }}
                         className="glass-panel about-panel text-center"
                     >
-                        <h2 className="section-title">Who We Are</h2>
-                        <p className="about-text" style={{ maxWidth: '800px', margin: '0 auto' }}>
-                            <span className="text-gold font-bold">Yazh Silambam Academy</span> is dedicated to preserving the ancient Tamil martial art of Silambam while building discipline, fitness, focus, and cultural pride in every student. We train children, youth, women, and adults in a safe, respectful environment, blending tradition with modern teaching methods.
-                        </p>
+                        <GradientText as="h2" className="section-title">Who We Are</GradientText>
+                        <GradientText as="p" className="about-text" style={{ maxWidth: '800px', margin: '0 auto' }}>
+                            Yazh Silambam Academy is dedicated to preserving the ancient Tamil martial art of Silambam
+                            while building discipline, fitness, focus, and cultural pride in every student. We train
+                            children, youth, women, and adults in a safe, respectful environment, blending tradition
+                            with modern teaching methods.
+                        </GradientText>
                     </motion.div>
                 </div>
             </section>
@@ -86,7 +107,7 @@ const Home = () => {
             {/* What We Provide */}
             <section className="section-padding bg-dark-overlay">
                 <div className="container">
-                    <h2 className="section-title">What We Provide</h2>
+                    <GradientText as="h2" className="section-title">What We Provide</GradientText>
                     <div className="feature-grid">
                         {[
                             {
@@ -113,8 +134,8 @@ const Home = () => {
                                     <div className="feature-icon-wrapper">
                                         {item.icon}
                                     </div>
-                                    <h3 className="feature-title">{item.title}</h3>
-                                    <p className="feature-desc">{item.desc}</p>
+                                    <GradientText as="h3" className="feature-title">{item.title}</GradientText>
+                                    <GradientText as="p" className="feature-desc">{item.desc}</GradientText>
                                 </>
                             );
 
@@ -151,31 +172,18 @@ const Home = () => {
                         viewport={{ once: true }}
                         className="glass-panel"
                     >
-                        <h2 className="section-title">Why Choose Yazh Silambam?</h2>
-                        <ul
-                            className="why-choose-list"
-                            style={{ listStyle: 'none', padding: 0, marginTop: '1.5rem', textAlign: 'center' }}
-                        >
+                        <GradientText as="h2" className="section-title">Why Choose Yazh Silambam?</GradientText>
+                        <ul className="why-choose-list" style={{ listStyle: 'none', padding: 0, marginTop: '1.5rem', textAlign: 'center' }}>
                             {[
-                                { icon: "✓", text: "Experienced instructors" },
-                                { icon: "✓", text: "Beginner to advanced levels" },
-                                { icon: "✓", text: "Separate methods for kids / women / adults" },
-                                { icon: "✓", text: "Focus on discipline & anti-bullying confidence" },
-                                { icon: "✓", text: "Regular events, demos & competitions" }
-                            ].map((item, index) => (
-                                <li
-                                    key={index}
-                                    style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '12px',
-                                        marginBottom: '1rem',
-                                        fontSize: '1.1rem'
-                                    }}
-                                >
-                                    <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>{item.icon}</span>
-                                    <span style={{ color: '#e5e5e5' }}>{item.text}</span>
+                                "Experienced instructors",
+                                "Beginner to advanced levels",
+                                "Separate methods for kids / women / adults",
+                                "Focus on discipline & anti-bullying confidence",
+                                "Regular events, demos & competitions"
+                            ].map((text, index) => (
+                                <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '1rem', fontSize: '1.1rem' }}>
+                                    <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>✓</span>
+                                    <GradientText as="span">{text}</GradientText>
                                 </li>
                             ))}
                         </ul>
@@ -194,10 +202,11 @@ const Home = () => {
                         className="text-center"
                         style={{ maxWidth: '550px', margin: '0 auto' }}
                     >
-                        <h2 className="section-title mb-6">Ready to Begin Your Journey?</h2>
-                        <p className="about-text mb-8">
-                            Join us and become part of a legacy that spans centuries. Experience the power, discipline, and cultural richness of Silambam.
-                        </p>
+                        <GradientText as="h2" className="section-title mb-6">Ready to Begin Your Journey?</GradientText>
+                        <GradientText as="p" className="about-text mb-8">
+                            Join us and become part of a legacy that spans centuries. Experience the power, discipline,
+                            and cultural richness of Silambam.
+                        </GradientText>
                         <div className="flex gap-4 flex-wrap justify-center">
                             <Link to="/contact" className="btn-primary hero-cta">
                                 Join the Legacy
