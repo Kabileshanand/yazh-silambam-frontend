@@ -1,9 +1,34 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Sword, Target, GripVertical } from 'lucide-react';
+import { Shield, Sword, GripVertical } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const useScrollGradient = () => {
+    const ref = useRef(null);
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const onScroll = () => {
+            const scrollY = window.scrollY;
+            const maxScroll = window.innerHeight;
+            const progress = Math.min(scrollY / maxScroll, 1);
+            const start = Math.round(progress * 100);
+            el.style.backgroundImage = `linear-gradient(135deg, #EB4C4C ${start}%, #ffffff ${start + 40}%, #EB4C4C 100%)`;
+            el.style.backgroundSize = '200% auto';
+            el.style.webkitBackgroundClip = 'text';
+            el.style.webkitTextFillColor = 'transparent';
+            el.style.backgroundClip = 'text';
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+    return ref;
+};
+
 const Home = () => {
+    const gradientTitleRef = useScrollGradient();
+    const gradientTaglineRef = useScrollGradient();
     return (
         <div className="home-page">
             {/* Hero Section */}
@@ -27,13 +52,13 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                         className="hero-text-container"
                     >
-                        <h1 className="hero-title">
-                            <span className="font-tamil title-prefix text-gold">Yazh</span> Silambam Academy
+                        <h1 className="hero-title" ref={gradientTitleRef} style={{ backgroundImage: 'linear-gradient(135deg, #EB4C4C 0%, #ffffff 40%, #EB4C4C 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                            Yazh Silambam Academy
                         </h1>
                         <p className="hero-subtitle">
                             Knowledge · Strength · Tradition
                         </p>
-                        <p className="hero-tagline" style={{ color: '#ccc', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
+                        <p ref={gradientTaglineRef} style={{ fontSize: '1.1rem', marginBottom: '1.5rem', backgroundImage: 'linear-gradient(135deg, #EB4C4C 0%, #ffffff 40%, #EB4C4C 100%)', backgroundSize: '200% auto', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                             Where Ancient Tamil Warrior Spirit Meets Modern Discipline
                         </p>
                     </motion.div>
