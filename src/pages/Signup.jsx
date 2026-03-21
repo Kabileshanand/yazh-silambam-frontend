@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../api';
+import { User, Calendar, AlertCircle } from 'lucide-react';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -46,75 +47,97 @@ const Signup = () => {
     };
 
     return (
-        <div className="page-container container h-screen-nav flex items-center justify-center">
+        <div className="login-page-wrapper">
+            <div className="login-nature-bg"></div>
+            <div className="login-overlay"></div>
+
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="glass-panel p-8 w-full max-w-lg"
+                transition={{ duration: 0.6 }}
+                className="login-glass-card"
+                style={{ maxWidth: '460px' }}
             >
-                <h2 className="text-3xl text-center mb-8 font-bold text-gold">Student Registration</h2>
-                {error && <p className="text-red-400 text-center mb-4">{error}</p>}
+                <div className="login-header">
+                    <h1 className="login-title">Student Registration</h1>
+                    <p className="login-subtitle">Fill in the details to create a student account</p>
+                </div>
 
-                <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                    <div>
-                        <label className="block text-gray-400 mb-2 text-sm">Student Name</label>
+                {error && (
+                    <div className="login-error-msg flex items-center justify-center gap-2">
+                        <AlertCircle size={16} />
+                        {error}
+                    </div>
+                )}
+
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <div className="login-input-group">
                         <input
                             type="text"
                             name="studentName"
-                            required
-                            className="form-input"
-                            placeholder="Enter full name"
+                            placeholder="Student Full Name"
+                            className="login-field"
                             value={formData.studentName}
                             onChange={handleChange}
+                            required
                         />
+                        <User className="login-field-icon" size={20} />
                     </div>
-                    <div>
-                        <label className="block text-gray-400 mb-2 text-sm">Father's Name</label>
+
+                    <div className="login-input-group">
                         <input
                             type="text"
                             name="fatherName"
-                            required
-                            className="form-input"
-                            placeholder="Enter father's name"
+                            placeholder="Father's Name"
+                            className="login-field"
                             value={formData.fatherName}
                             onChange={handleChange}
+                            required
                         />
+                        <User className="login-field-icon" size={20} />
                     </div>
-                    <div>
-                        <label className="block text-gray-400 mb-2 text-sm">Date of Birth</label>
+
+                    <div className="login-input-group">
                         <input
                             type="date"
                             name="dob"
-                            required
-                            className="form-input"
+                            className="login-field"
                             value={formData.dob}
                             onChange={handleChange}
+                            required
+                            style={{ colorScheme: 'dark' }}
                         />
+                        <Calendar className="login-field-icon" size={20} />
                     </div>
-                    <div>
-                        <label className="block text-gray-400 mb-2 text-sm">Admission Date</label>
+
+                    <div className="login-input-group">
                         <input
                             type="date"
                             name="admissionDate"
-                            required
-                            className="form-input"
+                            className="login-field"
                             value={formData.admissionDate}
                             onChange={handleChange}
+                            required
+                            style={{ colorScheme: 'dark' }}
                         />
+                        <Calendar className="login-field-icon" size={20} />
                     </div>
 
-                    <button type="submit" className="btn-primary w-full mt-4" disabled={loading}>
+                    <button type="submit" className="login-submit-btn" disabled={loading}>
                         {loading ? 'Registering...' : 'Register Student'}
                     </button>
 
-                    <p className="text-center text-sm text-gray-400 mt-4">
-                        Already have an ID? <Link to="/login" className="text-gold hover:underline">Login here</Link>
+                    <p className="login-footer-text">
+                        Already have an ID? <Link to="/login">Login here</Link>
                     </p>
                 </form>
+
+                <div className="login-attribution">
+                    Yazh Silambam Academy · <span className="text-gold">Student Portal</span>
+                </div>
             </motion.div>
         </div>
     );
 };
 
 export default Signup;
-
