@@ -3,7 +3,7 @@
   --primary-maroon-light: #6E0808;
   --accent-gold: #EB4C4C;
   --accent-gold-dark: #C43A3A;
-  --charcoal-grey: #212121;
+  --charcoal-grey: #0a0c12;
   --charcoal-light: #333333;
   --text-primary: #FFFFFF;
   --text-secondary: #E0E0E0;
@@ -28,7 +28,7 @@ html {
 
 body {
   font-family: var(--font-main);
-  background-color: var(--charcoal-grey);
+  background-color: #0a0c12;
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
@@ -82,10 +82,10 @@ h6 {
 
 /* ── Glassmorphism ── */
 .glass-panel {
-  background: rgba(33, 33, 33, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   border-radius: 16px;
 }
@@ -2312,4 +2312,21 @@ textarea.form-input {
   .md\:w-1\/4 { width: 25%; }
   .md\:w-3\/4 { width: 75%; }
   .md\:hidden { display: none; }
+}
+
+/* ── Dark Theme Orbs ── */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb-red {
+  background: rgba(235, 76, 76, 0.25);
+}
+
+.orb-dark {
+  background: rgba(74, 4, 4, 0.3);
 }
