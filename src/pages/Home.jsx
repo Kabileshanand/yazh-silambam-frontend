@@ -2,10 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Shield, Sword, GripVertical } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import AnimatedCanvas from '../components/AnimatedCanvas';
 
 const Home = () => {
     return (
-        <div className="home-page">
+        <div className="home-page" style={{ position: 'relative' }}>
+            <AnimatedCanvas />
             {/* Hero Section */}
             <section className="hero-section">
                 <div className="hero-overlay"></div>
