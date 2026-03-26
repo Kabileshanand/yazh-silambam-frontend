@@ -1,46 +1,182 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Sword, GripVertical } from 'lucide-react';
+import React, { useState, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, Sword, GripVertical, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AnimatedCanvas from '../components/AnimatedCanvas';
+
+const slides = [
+    {
+        image: '/images/bare-hand/Suvadu Murai.jpg',
+        title: 'Yazh Silambam Academy',
+        subtitle: 'Knowledge · Strength · Tradition',
+        tag: 'Bare Hand Techniques',
+        link: '/bare-hand-techniques',
+    },
+    {
+        image: '/images/stick-fencing/Thee Silambam.jpg',
+        title: 'Thee Silambam',
+        subtitle: 'Fire. Precision. Mastery.',
+        tag: 'Stick Fencing',
+        link: '/stick-fencing',
+    },
+    {
+        image: '/images/stick-fencing/Sparing.jpg',
+        title: 'Sparring',
+        subtitle: 'Real Combat. Real Confidence.',
+        tag: 'Stick Fencing',
+        link: '/stick-fencing',
+    },
+    {
+        image: '/images/weaponry/Surul.jpg',
+        title: 'Weaponry Training',
+        subtitle: 'Ancient Weapons. Modern Warriors.',
+        tag: 'Weaponry',
+        link: '/weaponry-training',
+    },
+    {
+        image: '/images/weaponry/Vaal.jpg',
+        title: 'Vaal Veechu',
+        subtitle: 'The Art of the Sword.',
+        tag: 'Weaponry',
+        link: '/weaponry-training',
+    },
+];
+
+const haptic = (pattern = [10]) => {
+    if (navigator.vibrate) navigator.vibrate(pattern);
+};
+
+const Carousel = () => {
+    const [current, setCurrent] = useState(0);
+    const [direction, setDirection] = useState(1);
+    const dragStartX = useRef(null);
+    const isDragging = useRef(false);
+
+    const goTo = useCallback((index, dir) => {
+        setDirection(dir);
+        setCurrent((index + slides.length) % slides.length);
+        haptic([12]);
+    }, []);
+
+    const prev = () => goTo(current - 1, -1);
+    const next = () => goTo(current + 1, 1);
+
+    const onDragStart = (e) => {
+        dragStartX.current = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        isDragging.current = true;
+    };
+
+    const onDragEnd = (e) => {
+        if (!isDragging.current) return;
+        isDragging.current = false;
+        const endX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+        const diff = dragStartX.current - endX;
+        if (Math.abs(diff) > 50) {
+            haptic([8, 30, 8]);
+            diff > 0 ? next() : prev();
+        }
+    };
+
+    const variants = {
+        enter: (dir) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0 }),
+        center: { x: 0, opacity: 1 },
+        exit: (dir) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0 }),
+    };
+
+    return (
+        <div
+            className="carousel-wrapper"
+            onMouseDown={onDragStart}
+            onMouseUp={onDragEnd}
+            onTouchStart={onDragStart}
+            onTouchEnd={onDragEnd}
+            style={{ userSelect: 'none' }}
+        >
+            <AnimatePresence initial={false} custom={direction} mode="sync">
+                <motion.div
+                    key={current}
+                    custom={direction}
+                    variants={variants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                    className="carousel-slide"
+                >
+                    <img
+                        src={slides[current].image}
+                        alt={slides[current].title}
+                        className="carousel-slide-img"
+                        draggable={false}
+                    />
+                    <div className="carousel-slide-overlay" />
+                    <div className="carousel-slide-content">
+                        <motion.span
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="carousel-tag"
+                        >
+                            {slides[current].tag}
+                        </motion.span>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                            className="carousel-title"
+                        >
+                            {slides[current].title}
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="carousel-subtitle"
+                        >
+                            {slides[current].subtitle}
+                        </motion.p>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                        >
+                            <Link to={slides[current].link} className="btn-primary carousel-cta">
+                                Explore
+                            </Link>
+                        </motion.div>
+                    </div>
+                </motion.div>
+            </AnimatePresence>
+
+            {/* Arrows */}
+            <button className="carousel-arrow carousel-arrow-left" onClick={prev}>
+                <ChevronLeft size={28} />
+            </button>
+            <button className="carousel-arrow carousel-arrow-right" onClick={next}>
+                <ChevronRight size={28} />
+            </button>
+
+            {/* Dots */}
+            <div className="carousel-dots">
+                {slides.map((_, i) => (
+                    <button
+                        key={i}
+                        className={`carousel-dot ${i === current ? 'active' : ''}`}
+                        onClick={() => goTo(i, i > current ? 1 : -1)}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const Home = () => {
     return (
         <div className="home-page" style={{ position: 'relative' }}>
             <AnimatedCanvas />
-            {/* Hero Section */}
-            <section className="hero-section">
-                <div className="hero-overlay"></div>
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="dashboard-bg-video"
-                    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 0 }}
-                >
-                    <source src="/videos/dashboard-hero.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-                <div className="container hero-content">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="hero-text-container"
-                    >
-                        <h1 className="hero-title">
-                            <span className="font-tamil title-prefix text-gold">Yazh</span> Silambam Academy
-                        </h1>
-                        <p className="hero-subtitle">
-                            Knowledge · Strength · Tradition
-                        </p>
-                        <p className="hero-tagline" style={{ color: '#ccc', fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                            Where Ancient Tamil Warrior Spirit Meets Modern Discipline
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
+
+            {/* Carousel Hero */}
+            <Carousel />
 
             {/* Who We Are */}
             <section id="who-we-are" className="section-padding">
@@ -87,14 +223,11 @@ const Home = () => {
                         ].map((item, index) => {
                             const CardContent = () => (
                                 <>
-                                    <div className="feature-icon-wrapper">
-                                        {item.icon}
-                                    </div>
+                                    <div className="feature-icon-wrapper">{item.icon}</div>
                                     <h3 className="feature-title">{item.title}</h3>
                                     <p className="feature-desc">{item.desc}</p>
                                 </>
                             );
-
                             return (
                                 <motion.div
                                     key={index}
@@ -104,13 +237,9 @@ const Home = () => {
                                     viewport={{ once: true }}
                                     className="glass-card feature-card"
                                 >
-                                    {item.link ? (
-                                        <Link to={item.link} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
-                                            <CardContent />
-                                        </Link>
-                                    ) : (
+                                    <Link to={item.link} style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
                                         <CardContent />
-                                    )}
+                                    </Link>
                                 </motion.div>
                             );
                         })}
