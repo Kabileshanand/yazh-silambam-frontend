@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { authAPI } from '../api';
 import { User, EyeOff, Eye, AlertCircle } from 'lucide-react';
 
@@ -158,11 +158,7 @@ const Login = () => {
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
 
-                    {role === 'student' && (
-                        <p className="login-footer-text">
-                            Don't have an ID? <Link to="/signup" className="text-gold font-bold">Register Student</Link>
-                        </p>
-                    )}
+
                 </form>
 
                 <div className="login-attribution">

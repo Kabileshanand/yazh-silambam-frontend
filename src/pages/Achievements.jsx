@@ -81,7 +81,7 @@ const Achievements = () => {
                 {
                     year: "2025 - 2026",
                     items: [
-                        { name: "B Dharnesh", category: "Under 17", result: "2nd Place" }
+                        { name: "B Dharnesh", category: "Under 17", result: "1st Place" }
                     ]
                 },
                 {
