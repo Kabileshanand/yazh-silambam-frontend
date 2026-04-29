@@ -1,11 +1,52 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Sword, GripVertical, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import AnimatedCanvas from '../components/AnimatedCanvas';
 
 const Home = () => {
     const [activeFeature, setActiveFeature] = useState(1);
+    const [isMobile, setIsMobile] = useState(false);
+    const [slideDirection, setSlideDirection] = useState(1); // 1 = up, -1 = down
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const mql = window.matchMedia('(max-width: 767px)');
+        const update = () => setIsMobile(mql.matches);
+        update();
+        mql.addEventListener('change', update);
+        return () => mql.removeEventListener('change', update);
+    }, []);
+
+    const features = useMemo(
+        () => [
+            {
+                title: "Bare Hand Technique",
+                link: "/bare-hand-techniques",
+                imageSrc: "/Barehand%20Technique.png",
+            },
+            {
+                title: "Stick Fencing",
+                link: "/stick-fencing",
+                imageSrc: "/Stick%20Fencing.png",
+            },
+            {
+                title: "Weaponry Training",
+                link: "/weaponry-training",
+                imageSrc: "/Weaponry%20Training.png",
+            },
+        ],
+        []
+    );
+
+    const goToFeature = (nextIndex) => {
+        setActiveFeature((prev) => {
+            const next = ((nextIndex % features.length) + features.length) % features.length;
+            const dir = next === prev ? 1 : next > prev ? 1 : -1;
+            setSlideDirection(dir);
+            return next;
+        });
+    };
     
     return (
         <div className="home-page" style={{ position: 'relative' }}>
@@ -60,93 +101,151 @@ const Home = () => {
                         What We Provide
                     </motion.h2>
                     <div className="relative flex items-center justify-center w-full">
-                        <div className="feature-grid w-full md:pr-12 lg:pr-20">
-                            {[
-                            {
-                                icon: <Shield className="feature-icon" />,
-                                title: "Bare Hand Technique",
-                                desc: "Master unarmed combat, footwork, blocks, strikes and self-defense rooted in ancient Tamil methods.",
-                                link: "/bare-hand-techniques"
-                            },
-                            {
-                                icon: <GripVertical className="feature-icon" />,
-                                title: "Stick Fencing",
-                                desc: "Intensive training in bamboo staff (silambam) spinning, strikes, defense, sparring, and forms to build speed, precision & agility.",
-                                link: "/stick-fencing"
-                            },
-                            {
-                                icon: <Sword className="feature-icon" />,
-                                title: "Weaponry Training",
-                                desc: "Progress to traditional weapons plus cultural performances, and demonstrations that celebrate Tamil heritage",
-                                link: "/weaponry-training"
-                            }
-                        ].map((item, index) => {
-                            const isActive = activeFeature === index;
-                            
-                            return (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    viewport={{ once: true }}
-                                    onClick={() => setActiveFeature(index)}
-                                    layout
-                                    style={{ 
-                                        flex: isActive ? 2 : 0.8,
-                                        zIndex: isActive ? 40 : 10,
-                                        opacity: isActive ? 1 : 0.6,
-                                        transform: isActive 
-                                            ? 'perspective(1200px) scale(1) rotateY(0deg) translateZ(50px)' 
-                                            : `perspective(1200px) scale(0.85) rotateY(${index < activeFeature ? '35deg' : '-35deg'}) translateZ(-100px)`,
-                                        transformOrigin: index < activeFeature ? 'right center' : 'left center',
-                                        minHeight: isActive ? '400px' : '300px',
-                                        marginLeft: index > activeFeature ? '-4rem' : '0',
-                                        marginRight: index < activeFeature ? '-4rem' : '0',
-                                        boxShadow: isActive 
-                                            ? '0 0 30px rgba(235, 76, 76, 0.4), 0 0 60px rgba(235, 76, 76, 0.2), inset 0 0 15px rgba(235, 76, 76, 0.15)' 
-                                            : '0 0 20px rgba(235, 76, 76, 0.15)',
-                                        border: isActive ? '1px solid rgba(235, 76, 76, 0.5)' : '1px solid rgba(235, 76, 76, 0.1)'
+                        {isMobile ? (
+                            <div className="w-full" style={{ maxWidth: 520, position: 'relative', paddingBottom: 18 }}>
+                                {/* subtle stacked previews behind the active card */}
+                                <div
+                                    aria-hidden="true"
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        pointerEvents: 'none',
                                     }}
-                                    className={`glass-card feature-card cursor-pointer overflow-hidden relative`}
                                 >
-                                    <motion.div layout="position" className="flex flex-col items-center justify-center h-full w-full relative z-10 min-w-[220px]">
-                                        <div className={`feature-icon-wrapper transition-all duration-500 ${isActive ? 'scale-110 mb-6' : 'scale-90 mb-2'}`}>
-                                            {item.icon}
-                                        </div>
-                                        <motion.h3 layout="position" className={`font-bold transition-all duration-500 ${isActive ? 'text-2xl mb-4' : 'text-lg mb-2 text-center'}`}>
-                                            {item.title}
-                                        </motion.h3>
-                                        
-                                        <AnimatePresence>
-                                            {isActive && (
-                                                <motion.div 
-                                                    initial={{ opacity: 0, height: 0 }}
-                                                    animate={{ opacity: 1, height: 'auto' }}
-                                                    exit={{ opacity: 0, height: 0 }}
-                                                    className="flex flex-col items-center"
-                                                >
-                                                    <p className="feature-desc mb-6">{item.desc}</p>
-                                                    <Link 
-                                                        to={item.link} 
-                                                        className="btn-primary text-sm px-6 py-2"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    >
-                                                        Explore Course
-                                                    </Link>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
+                                    {[2, 1].map((depth) => {
+                                        const idx = (activeFeature + depth) % features.length;
+                                        const scale = depth === 1 ? 0.965 : 0.93;
+                                        const y = depth === 1 ? 14 : 26;
+                                        const opacity = depth === 1 ? 0.28 : 0.16;
+                                        return (
+                                            <div
+                                                key={`${activeFeature}-${depth}`}
+                                                className="glass-card feature-card feature-provide-card overflow-hidden relative"
+                                                style={{
+                                                    position: 'absolute',
+                                                    width: '100%',
+                                                    minHeight: 320,
+                                                    transform: `translateY(${y}px) scale(${scale})`,
+                                                    opacity,
+                                                    border: '1px solid rgba(235, 76, 76, 0.25)',
+                                                    boxShadow: '0 0 14px rgba(235, 76, 76, 0.10)',
+                                                }}
+                                            >
+                                                <img
+                                                    src={features[idx].imageSrc}
+                                                    alt=""
+                                                    className="feature-provide-image"
+                                                    draggable={false}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+
+                                <AnimatePresence mode="wait" initial={false} custom={slideDirection}>
+                                    <motion.div
+                                        key={activeFeature}
+                                        custom={slideDirection}
+                                        initial={(dir) => ({ opacity: 0, y: dir > 0 ? 46 : -46 })}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={(dir) => ({ opacity: 0, y: dir > 0 ? -46 : 46 })}
+                                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                                        drag="y"
+                                        dragConstraints={{ top: 0, bottom: 0 }}
+                                        dragElastic={0.2}
+                                        onDragEnd={(_, info) => {
+                                            const threshold = 60;
+                                            if (info.offset.y < -threshold) {
+                                                goToFeature(activeFeature + 1);
+                                            } else if (info.offset.y > threshold) {
+                                                goToFeature(activeFeature - 1);
+                                            }
+                                        }}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            navigate(features[activeFeature].link);
+                                        }}
+                                        className="glass-card feature-card feature-provide-card cursor-pointer overflow-hidden relative"
+                                        style={{
+                                            minHeight: 320,
+                                            border: '1px solid rgba(235, 76, 76, 0.75)',
+                                            boxShadow: '0 0 35px rgba(235, 76, 76, 0.35)',
+                                            position: 'relative',
+                                        }}
+                                    >
+                                        <img
+                                            src={features[activeFeature].imageSrc}
+                                            alt={features[activeFeature].title}
+                                            className="feature-provide-image feature-provide-image--active"
+                                            draggable={false}
+                                        />
                                     </motion.div>
-                                </motion.div>
-                            );
-                        })}
-                        </div>
-                        <button 
-                            className="absolute right-0 z-20 w-12 h-12 hidden md:flex items-center justify-center bg-gold text-maroon font-bold rounded-full hover:bg-[#ca3b3b] shadow-[0_0_20px_rgba(235,76,76,0.5)] transition-transform hover:scale-110"
-                            onClick={() => setActiveFeature((prev) => (prev + 1) % 3)}
+                                </AnimatePresence>
+                            </div>
+                        ) : (
+                            <div className="feature-grid w-full md:pr-12 lg:pr-20">
+                                {features.map((item, index) => {
+                                    const isActive = activeFeature === index;
+
+                                    return (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                                            viewport={{ once: true }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setActiveFeature(index);
+                                                navigate(item.link);
+                                            }}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter' || e.key === ' ') {
+                                                    e.preventDefault();
+                                                    setActiveFeature(index);
+                                                    navigate(item.link);
+                                                }
+                                            }}
+                                            layout
+                                            style={{
+                                                flex: isActive ? 2 : 0.8,
+                                                zIndex: isActive ? 40 : 10,
+                                                opacity: isActive ? 1 : 0.6,
+                                                transform: isActive
+                                                    ? 'perspective(1200px) scale(1) rotateY(0deg) translateZ(50px)'
+                                                    : `perspective(1200px) scale(0.85) rotateY(${index < activeFeature ? '35deg' : '-35deg'}) translateZ(-100px)`,
+                                                transformOrigin: index < activeFeature ? 'right center' : 'left center',
+                                                minHeight: isActive ? '400px' : '300px',
+                                                marginLeft: index > activeFeature ? '-4rem' : '0',
+                                                marginRight: index < activeFeature ? '-4rem' : '0',
+                                                boxShadow: isActive
+                                                    ? '0 0 45px rgba(235, 76, 76, 0.55), 0 0 85px rgba(235, 76, 76, 0.25), inset 0 0 18px rgba(235, 76, 76, 0.22)'
+                                                    : '0 0 20px rgba(235, 76, 76, 0.15)',
+                                                border: isActive ? '1px solid rgba(235, 76, 76, 0.75)' : '1px solid rgba(235, 76, 76, 0.1)',
+                                            }}
+                                            className="glass-card feature-card feature-provide-card cursor-pointer overflow-hidden relative"
+                                        >
+                                            <img
+                                                src={item.imageSrc}
+                                                alt={item.title}
+                                                className={`feature-provide-image ${isActive ? 'feature-provide-image--active' : ''}`}
+                                                draggable={false}
+                                            />
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                        <button
+                            type="button"
+                            className="feature-provide-arrow"
+                            onClick={() => goToFeature(activeFeature + 1)}
+                            aria-label="Next feature"
                         >
-                            <ChevronRight size={28} />
+                            <ChevronRight size={30} strokeWidth={3} />
                         </button>
                     </div>
                 </div>
