@@ -799,6 +799,25 @@ h6 {
   filter: brightness(1.0) saturate(1.0);
 }
 
+.feature-provide-image--mobile {
+  /* Reduce expensive repaints during drag on mobile */
+  transition: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.feature-provide-card {
+  will-change: transform;
+}
+
+@media (max-width: 767px) {
+  /* Backdrop blur + heavy shadows can stutter during swipe */
+  .feature-provide-card.glass-card {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+}
+
 .feature-provide-image-fade {
   /* no longer used after removing the Explore Course overlay */
   display: none;

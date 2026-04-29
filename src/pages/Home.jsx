@@ -128,17 +128,19 @@ const Home = () => {
                                                     position: 'absolute',
                                                     width: '100%',
                                                     minHeight: 320,
-                                                    transform: `translateY(${y}px) scale(${scale})`,
+                                                    transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
                                                     opacity,
                                                     border: '1px solid rgba(235, 76, 76, 0.25)',
                                                     boxShadow: '0 0 14px rgba(235, 76, 76, 0.10)',
+                                                    willChange: 'transform',
                                                 }}
                                             >
                                                 <img
                                                     src={features[idx].imageSrc}
                                                     alt=""
-                                                    className="feature-provide-image"
+                                                    className="feature-provide-image feature-provide-image--mobile"
                                                     draggable={false}
+                                                    decoding="async"
                                                 />
                                             </div>
                                         );
@@ -156,6 +158,7 @@ const Home = () => {
                                         drag="y"
                                         dragConstraints={{ top: 0, bottom: 0 }}
                                         dragElastic={0.2}
+                                        dragMomentum={false}
                                         onDragEnd={(_, info) => {
                                             const threshold = 60;
                                             if (info.offset.y < -threshold) {
@@ -174,13 +177,16 @@ const Home = () => {
                                             border: '1px solid rgba(235, 76, 76, 0.75)',
                                             boxShadow: '0 0 35px rgba(235, 76, 76, 0.35)',
                                             position: 'relative',
+                                            willChange: 'transform',
+                                            transform: 'translateZ(0)',
                                         }}
                                     >
                                         <img
                                             src={features[activeFeature].imageSrc}
                                             alt={features[activeFeature].title}
-                                            className="feature-provide-image feature-provide-image--active"
+                                            className="feature-provide-image feature-provide-image--active feature-provide-image--mobile"
                                             draggable={false}
+                                            decoding="async"
                                         />
                                     </motion.div>
                                 </AnimatePresence>
