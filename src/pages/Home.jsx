@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import AnimatedCanvas from '../components/AnimatedCanvas';
+import { useNavigate } from 'react-router-dom';
+import Contact from './Contact';
 
 const Home = () => {
     const [activeFeature, setActiveFeature] = useState(1);
     const [isMobile, setIsMobile] = useState(false);
     const [slideDirection, setSlideDirection] = useState(1); // 1 = up, -1 = down
+    const [isCoachExpanded, setIsCoachExpanded] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,12 +51,10 @@ const Home = () => {
     
     return (
         <div className="home-page" style={{ position: 'relative' }}>
-            <AnimatedCanvas />
-
             {/* Cover Image Hero */}
             <div className="cover-hero-sticky">
                 <img
-                    src="/coverimage.png"
+                    src="/Home%20Page%20Cover%20Image.png"
                     alt="Yazh Silambam Academy"
                     className="cover-hero-img"
                     draggable={false}
@@ -294,37 +293,64 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Join the Legacy */}
-            <section className="section-padding bg-dark-overlay">
+            {/* Coach */}
+            <section className="section-padding">
                 <div className="container">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
                         viewport={{ once: true }}
-                        className="text-center"
-                        style={{ maxWidth: '550px', margin: '0 auto' }}
+                        className="glass-panel coach-column"
                     >
-                        <motion.h2 
-                            className="section-title mb-6 swing-text-reveal"
-                            initial={{ backgroundPosition: "100% 0%" }}
-                            whileInView={{ backgroundPosition: "0% 0%" }}
-                            transition={{ duration: 1.2, ease: "easeOut" }}
-                            viewport={{ once: true, margin: "-50px" }}
-                        >
-                            Ready to Begin Your Journey?
-                        </motion.h2>
-                        <p className="about-text mb-8">
-                            Join us and become part of a legacy that spans centuries. Experience the power, discipline, and cultural richness of Silambam.
-                        </p>
-                        <div className="flex gap-4 flex-wrap justify-center">
-                            <Link to="/contact" className="btn-primary hero-cta">
-                                Join the Legacy
-                            </Link>
+                        <h2 className="coach-title">Coach</h2>
+                        <div className="coach-layout">
+                            <div className="coach-image-placeholder" aria-label="Coach image placeholder">
+                                <span>Coach image coming soon</span>
+                            </div>
+                            <div className="coach-side-card">
+                                <p className="coach-subtitle">Meet Our Coach</p>
+                                <h3 className="coach-name">Karthikeyan Kannan</h3>
+                                <p className="coach-role">Founder &amp; Head Coach</p>
+                                <button
+                                    type="button"
+                                    className="coach-read-more"
+                                    onClick={() => setIsCoachExpanded((prev) => !prev)}
+                                >
+                                    {isCoachExpanded ? 'Read less' : 'Read more'}
+                                </button>
+                            </div>
                         </div>
+
+                        {isCoachExpanded && (
+                            <div className="coach-read-content">
+                                <p className="coach-description">
+                                    With over 20 years of dedicated practice in the ancient Tamil martial art of Silambam,
+                                    Karthikeyan Kannan brings unmatched passion, depth, and authenticity to Yazh Silambam Academy.
+                                </p>
+                                <p className="coach-description">
+                                    He began his journey at the tender age of 5, growing up under the traditional training system.
+                                    Today, with more than 8 years of teaching experience, he has trained hundreds of students from
+                                    young children to adults helping them build discipline, fitness, self-defense skills, and a deep
+                                    connection to Tamil cultural heritage.
+                                </p>
+                                <p className="coach-description">
+                                    As a competitive athlete, Karthikeyan has proudly represented Tamil Nadu at the National Level
+                                    Silambam Championship, winning two National Medals in 2018 and 2019. His personal achievements,
+                                    combined with his patient and structured teaching style, make him a highly respected coach in the
+                                    Silambam community.
+                                </p>
+                                <p className="coach-description">
+                                    Under his guidance, students not only learn powerful Silambam techniques but also develop strong
+                                    character, focus, and respect for tradition.
+                                </p>
+                            </div>
+                        )}
                     </motion.div>
                 </div>
             </section>
+
+            <Contact />
         </div>
     );
 };

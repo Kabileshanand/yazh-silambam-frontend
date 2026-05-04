@@ -13,11 +13,13 @@ import StickFencing from './pages/StickFencing';
 import WeaponryTraining from './pages/WeaponryTraining';
 
 import ScrollToTop from './components/ScrollToTop';
+import IntroVideo from './components/IntroVideo';
 
 function App() {
   return (
     <Router>
       <ScrollToTop />
+      <IntroVideo />
       <div className="app-container">
         <Navbar />
         <Routes>

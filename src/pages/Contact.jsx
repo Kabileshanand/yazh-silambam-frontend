@@ -1,79 +1,138 @@
-import React from 'react';
-import { Instagram } from 'lucide-react';
-import { Link } from 'react-router-dom';
-
-const YouTubeIcon = ({ size = 24 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-    </svg>
-);
-
-const WhatsAppIcon = ({ size = 24 }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-    </svg>
-);
+import React, { useState } from 'react';
+import { Instagram, Youtube } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+    const [submitState, setSubmitState] = useState({ type: '', message: '' });
+
+    const handleInquirySubmit = (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(event.currentTarget);
+        const name = formData.get('name')?.toString().trim() || '';
+        const email = formData.get('email')?.toString().trim() || '';
+        const phone = formData.get('phone')?.toString().trim() || '';
+        const message = formData.get('message')?.toString().trim() || '';
+
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+        if (!serviceId || !templateId || !publicKey) {
+            setSubmitState({
+                type: 'error',
+                message: 'Email service is not configured. Please add EmailJS keys in environment variables.'
+            });
+            return;
+        }
+
+        setSubmitState({ type: 'loading', message: 'Sending enquiry...' });
+
+        emailjs
+            .send(
+                serviceId,
+                templateId,
+                {
+                    to_email: 'yazhsilambam2022@gmail.com',
+                    from_name: name,
+                    from_email: email,
+                    phone,
+                    message,
+                },
+                { publicKey }
+            )
+            .then(() => {
+                setSubmitState({ type: 'success', message: 'Enquiry sent successfully.' });
+                event.currentTarget.reset();
+            })
+            .catch(() => {
+                setSubmitState({
+                    type: 'error',
+                    message: 'Failed to send enquiry. Please try again.'
+                });
+            });
+    };
+
     return (
         <div className="contact-page">
-            {/* Main contact section - dark grey */}
-            <section className="contact-hero">
-                <span className="contact-watermark" aria-hidden="true">LET'S TALK</span>
-                <div className="contact-hero-content">
-                    <p className="contact-email-large">
-                        yazhsilambam2022<span className="text-gold">@</span>gmail.com
+            <section className="contact-panel">
+                <div className="contact-left">
+                    <h1 className="contact-title">
+                        Let&apos;s build a <span>greatest</span> team together!
+                    </h1>
+                    <p className="contact-subtitle">
+                        Whether you&apos;re a beginner or advancing your skills, our classes are designed
+                        to help you grow stronger and more confident with every session.
                     </p>
-                    <div className="contact-social">
-                        <a
-                            href="https://youtube.com/@yazhsilambam?si=Rnyb8ZEMOC1jhhVL"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="contact-social-link"
-                            aria-label="Visit our YouTube channel"
-                        >
-                            <YouTubeIcon size={24} />
-                            <span>YOUTUBE</span>
+
+                    <div className="contact-info-block">
+                        <p className="contact-info-label">Email</p>
+                        <a className="contact-info-value" href="mailto:yazhsilambam2022@gmail.com">
+                            yazhsilambam2022@gmail.com
                         </a>
-                        <span className="contact-social-divider">/</span>
-                        <a
-                            href="https://www.instagram.com/yazh_silambam?igsh=MXcwZWsyMWFleHp6dw=="
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="contact-social-link"
-                            aria-label="Follow us on Instagram"
-                        >
-                            <Instagram size={24} strokeWidth={1.5} />
-                            <span>INSTAGRAM</span>
+
+                        <p className="contact-info-label">Phone</p>
+                        <a className="contact-info-value" href="tel:+919360282959">
+                            +91 93602 82959
                         </a>
-                        <span className="contact-social-divider">/</span>
-                        <a
-                            href="https://chat.whatsapp.com/GRaoRY0xmWJ9MSuJZMr07i?mode=gi_t"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="contact-social-link"
-                            aria-label="Join our WhatsApp group"
-                        >
-                            <WhatsAppIcon size={24} />
-                            <span>WHATSAPP</span>
-                        </a>
+
+                        <div className="contact-social">
+                            <a
+                                href="https://www.instagram.com/yazh_silambam?igsh=MXcwZWsyMWFleHp6dw=="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="contact-social-link"
+                                aria-label="Follow us on Instagram"
+                            >
+                                <Instagram size={18} />
+                                <span>Instagram</span>
+                            </a>
+                            <a
+                                href="https://youtube.com/@yazhsilambam?si=Rnyb8ZEMOC1jhhVL"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="contact-social-link"
+                                aria-label="Visit our YouTube channel"
+                            >
+                                <Youtube size={18} />
+                                <span>YouTube</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </section>
 
-            {/* Footer contact section - lighter */}
-            <section className="contact-footer">
-                <div className="contact-footer-inner">
-                    <div className="contact-cta">FOR PLAYER REGISTRATION OR HAVE ANY QUESTIONS?</div>
-                    <div className="contact-phone-block">
-                        <span className="contact-phone-label">PHONE NUMBER:</span>
-                        <span className="contact-phone-number">+91 93602 82959</span>
-                    </div>
-                    <nav className="contact-nav">
-                        <Link to="/">HOME</Link>
-                        <Link to="/events">EVENTS</Link>
-                        <Link to="/achievements">ACHIEVEMENTS</Link>
-                    </nav>
+                <div className="contact-right">
+                    <form className="contact-form" onSubmit={handleInquirySubmit}>
+                        <div className="contact-form-row">
+                            <input type="text" name="name" placeholder="Name" required />
+                            <input type="email" name="email" placeholder="Email" required />
+                        </div>
+                        <div className="contact-form-row">
+                            <input type="tel" name="phone" placeholder="Phone" required />
+                        </div>
+                        <div className="contact-form-row">
+                            <textarea name="message" placeholder="Message" rows="5" required />
+                        </div>
+                        <button
+                            type="submit"
+                            className="contact-submit-btn"
+                            disabled={submitState.type === 'loading'}
+                        >
+                            {submitState.type === 'loading' ? (
+                                <span className="inline-loader-wrap">
+                                    <img src="/Buffering.png" alt="" className="inline-loader-image" aria-hidden="true" />
+                                    Sending...
+                                </span>
+                            ) : (
+                                'Send Inquiry'
+                            )}
+                        </button>
+                        {submitState.message && (
+                            <p className={`contact-submit-status ${submitState.type}`}>
+                                {submitState.message}
+                            </p>
+                        )}
+                    </form>
                 </div>
             </section>
         </div>

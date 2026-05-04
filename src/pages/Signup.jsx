@@ -124,7 +124,14 @@ const Signup = () => {
                     </div>
 
                     <button type="submit" className="login-submit-btn" disabled={loading}>
-                        {loading ? 'Registering...' : 'Register Student'}
+                        {loading ? (
+                            <span className="inline-loader-wrap">
+                                <img src="/Buffering.png" alt="" className="inline-loader-image" aria-hidden="true" />
+                                Registering...
+                            </span>
+                        ) : (
+                            'Register Student'
+                        )}
                     </button>
 
                     <p className="login-footer-text">

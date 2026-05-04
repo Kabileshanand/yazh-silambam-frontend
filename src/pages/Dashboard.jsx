@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Calendar, TrendingUp, User, Edit, Save, Plus, Search, Trash2, LogOut, CalendarDays, X, CheckCircle } from 'lucide-react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { usersAPI, authAPI } from '../api';
+import NetworkLoader from '../components/NetworkLoader';
 
 
 const Dashboard = () => {
@@ -135,7 +136,7 @@ const Dashboard = () => {
         }
     };
 
-    if (loading) return <div className="text-white text-center mt-20">Loading Dashboard...</div>;
+    if (loading) return <NetworkLoader label="Loading Dashboard..." />;
 
     const tabs = [
         { id: 'attendance', label: 'Attendance', icon: <Calendar /> },

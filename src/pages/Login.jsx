@@ -155,7 +155,14 @@ const Login = () => {
                     </div>
 
                     <button type="submit" className="login-submit-btn" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
+                        {loading ? (
+                            <span className="inline-loader-wrap">
+                                <img src="/Buffering.png" alt="" className="inline-loader-image" aria-hidden="true" />
+                                Logging in...
+                            </span>
+                        ) : (
+                            'Login'
+                        )}
                     </button>
 
 
