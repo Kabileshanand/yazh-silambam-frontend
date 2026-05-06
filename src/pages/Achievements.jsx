@@ -2,13 +2,26 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Award } from 'lucide-react';
 import AnimatedCanvas from '../components/AnimatedCanvas';
-const img1 = '/images/studentsimg/R Devendran.jpeg';
+
+const normalizeName = (value) =>
+    value.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const studentPhotoMap = {
+    [normalizeName('K P Tharrun Durai')]: '/Students%20Profile/K.P.%20Tharrun%20Durai.jpg',
+    [normalizeName('A T Vishvanth')]: '/Students%20Profile/A.T.Vishvanth.jpg',
+    [normalizeName('B Aradhana')]: '/Students%20Profile/B.Aradhana.jpg',
+    [normalizeName('R Devendran')]: '/Students%20Profile/R.%20Devendran.jpg',
+    [normalizeName('S Sri Dharshini')]: '/Students%20Profile/S.Sri%20Dharshini.jpg',
+    [normalizeName('S Abirakshaya')]: '/Students%20Profile/S.%20Abirakashaya.jpg',
+    [normalizeName('V Vivitha')]: '/Students%20Profile/Vivitha.jpg',
+    [normalizeName('V Vivitha')]: '/Students%20Profile/Vivitha.jpg',
+    [normalizeName('B Dharnesh')]: '/Students%20Profile/B.Dharnesh.jpg',
+};
+
+const getStudentPhoto = (name) => studentPhotoMap[normalizeName(name)] || null;
 
 
 const StudentPhoto = ({ name, photo }) => {
-    const Images = [
-        { name: 'R Devendran', src: img1 }
-    ];
     const [imageError, setImageError] = useState(false);
     const initials = name
         .split(' ')
@@ -17,7 +30,7 @@ const StudentPhoto = ({ name, photo }) => {
         .toUpperCase()
         .slice(0, 2);
 
-    if (imageError) {
+    if (imageError || !photo) {
         return (
             <div className="student-photo-fallback">
                 {initials}
@@ -26,17 +39,12 @@ const StudentPhoto = ({ name, photo }) => {
     }
 
     return (
-        <>
-            {Images.map((image, index) => (
-                <img
-                    key={index}
-                    src={image.src}
-                    alt={name}
-                    onError={() => setImageError(true)}
-                    className="student-photo"
-                />
-            ))}
-        </>
+        <img
+            src={photo}
+            alt={name}
+            onError={() => setImageError(true)}
+            className="student-photo"
+        />
     );
 };
 
@@ -54,7 +62,7 @@ const Achievements = () => {
                         { name: "S Abirakshaya", category: "Under 14", result: "2nd Place" },
                         { name: "R Devendran", category: "Under 17", result: "2nd Place" },
                         { name: "S Sri Dharshini", category: "Under 19", result: "2nd Place (Zonal)" },
-                        { name: "V Vititha", category: "Under 19", result: "3rd Place (Zonal)" },
+                        { name: "V Vivitha", category: "Under 19", result: "3rd Place (Zonal)" },
                         { name: "B Aradhana", category: "Under 14", result: "3rd Place (Zonal)" },
                     ]
                 },
@@ -154,7 +162,7 @@ const Achievements = () => {
                     const tableData = section.groups.flatMap(group =>
                         group.items.map(item => ({
                             name: item.name,
-                            photo: item.photo || `/images/students/${item.name.replace(/\s+/g, '-').toLowerCase()}.jpg`,
+                            photo: item.photo || getStudentPhoto(item.name),
                             year: group.year,
                             category: item.category,
                             result: item.result

@@ -25,7 +25,7 @@ const Events = () => {
                         <span className="events-mag-title-bottom">EVENTS</span>
                     </div>
                     <p className="about-text events-intro-text events-header-copy" style={{ lineHeight: 1.8 }}>
-                        At Yazh Silambam Academy, we don’t just train students. We bring the ancient Tamil martial art of
+                        At Yazh Silambam Academy, we don't just train students. We bring the ancient Tamil martial art of
                         Silambam alive on stage, in temples, and within school campuses. Over the years, our students have
                         proudly represented our academy at prestigious venues across Salem, mesmerizing audiences with powerful
                         performances that blend tradition, discipline, and excellence.

@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MaskHero from '../components/MaskHero';
+
 
 const coreTechniques = [
   {
@@ -86,53 +88,57 @@ const TechniqueList = ({ techniques, startIndex = 0 }) => (
 
 const StickFencing = () => {
   return (
-    <div className="page-container container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8"
-      >
-        <h1 className="section-title">Stick Fencing</h1>
-        <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
-          Stick Fencing is the heart of <span className="text-gold">Silambam</span>, centered on the bamboo
-          staff. It builds precision, speed, rhythm, and 360° defense through spinning, striking, and
-          sparring forms.
-        </p>
-      </motion.div>
+    <div className="page-container" style={{ padding: 0 }}>
+      <MaskHero title="STICK" subtitle="FENCING" imageSrc="/Stick Fencing.png" />
 
-      {/* Silambam Core */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="mb-4"
-      >
-        <h2 className="achievement-section-title">Silambam Core</h2>
-      </motion.div>
+      <div className="container" style={{ marginTop: '1rem' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <h1 className="section-title">Stick Fencing</h1>
+          <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
+            Stick Fencing is the heart of <span className="text-gold">Silambam</span>, centered on the bamboo
+            staff. It builds precision, speed, rhythm, and 360° defense through spinning, striking, and
+            sparring forms.
+          </p>
+        </motion.div>
 
-      <div className="stick-showcase-surface mt-4 mb-12">
-        <TechniqueList techniques={coreTechniques} startIndex={0} />
-      </div>
+        {/* Silambam Core */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-4"
+        >
+          <h2 className="achievement-section-title">Silambam Core</h2>
+        </motion.div>
 
-      {/* Alangara Silambam */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-        className="mb-4"
-      >
-        <h2 className="achievement-section-title">Alangara Silambam</h2>
-        <p className="achievement-section-subtitle">Decorative / Performance Silambam</p>
-        <p className="about-text text-center mt-4" style={{ maxWidth: '700px', margin: '1rem auto 0' }}>
-          Alangara Silambam emphasizes aesthetic, flowing displays for events and cultural shows.
-        </p>
-      </motion.div>
+        <div className="stick-showcase-surface mt-4 mb-12">
+          <TechniqueList techniques={coreTechniques} startIndex={0} />
+        </div>
 
-      <div className="stick-showcase-surface mt-4">
-        <TechniqueList techniques={alangara} startIndex={0} />
+        {/* Alangara Silambam */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          className="mb-4"
+        >
+          <h2 className="achievement-section-title">Alangara Silambam</h2>
+          <p className="achievement-section-subtitle">Decorative / Performance Silambam</p>
+          <p className="about-text text-center mt-4" style={{ maxWidth: '700px', margin: '1rem auto 0' }}>
+            Alangara Silambam emphasizes aesthetic, flowing displays for events and cultural shows.
+          </p>
+        </motion.div>
+
+        <div className="stick-showcase-surface mt-4">
+          <TechniqueList techniques={alangara} startIndex={0} />
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MaskHero from '../components/MaskHero';
+
 
 const techniques = [
   {
@@ -31,44 +33,48 @@ const techniques = [
 
 const BareHandTechniques = () => {
   return (
-    <div className="page-container container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8"
-      >
-        <h1 className="section-title">Bare Hand Techniques</h1>
-        <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
-          Bare Hand Techniques <span className="text-gold">(Verum Kai Prayogam or Kuthu Varisai)</span> form
-          the foundation of Silambam, building agility, power, and self-defense without weapons. These
-          unarmed methods prepare the body for armed combat and real-world protection.
-        </p>
-      </motion.div>
+    <div className="page-container" style={{ padding: 0 }}>
+      <MaskHero title="BARE HAND" subtitle="TECHNIQUES" imageSrc="/Barehand Technique.png" />
 
-      <div className="stick-showcase-surface mt-8">
-        {techniques.map((technique, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.08 }}
-            viewport={{ once: true }}
-            className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
-          >
-            <div className="stick-showcase-media">
-              <img
-                src={technique.image}
-                alt={technique.title}
-                className="stick-showcase-image"
-              />
-            </div>
-            <div className="stick-showcase-content">
-              <h2 className="stick-showcase-title">{technique.title}</h2>
-              <p className="stick-showcase-desc">{technique.desc}</p>
-            </div>
-          </motion.div>
-        ))}
+      <div className="container" style={{ marginTop: '1rem' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <h1 className="section-title">Bare Hand Techniques</h1>
+          <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
+            Bare Hand Techniques <span className="text-gold">(Verum Kai Prayogam or Kuthu Varisai)</span> form
+            the foundation of Silambam, building agility, power, and self-defense without weapons. These
+            unarmed methods prepare the body for armed combat and real-world protection.
+          </p>
+        </motion.div>
+
+        <div className="stick-showcase-surface mt-8">
+          {techniques.map((technique, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              viewport={{ once: true }}
+              className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
+            >
+              <div className="stick-showcase-media">
+                <img
+                  src={technique.image}
+                  alt={technique.title}
+                  className="stick-showcase-image"
+                />
+              </div>
+              <div className="stick-showcase-content">
+                <h2 className="stick-showcase-title">{technique.title}</h2>
+                <p className="stick-showcase-desc">{technique.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );

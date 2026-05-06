@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Instagram, Youtube } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import LocationMap from '../components/LocationMap';
 
 const Contact = () => {
     const [submitState, setSubmitState] = useState({ type: '', message: '' });
@@ -133,8 +134,23 @@ const Contact = () => {
                             </p>
                         )}
                     </form>
+                    
+                    <div style={{ marginTop: '3rem', zIndex: 10, position: 'relative', display: 'flex', justifyContent: 'center' }}>
+                        <a href="https://share.google/rWPyEpAGgRpQE2f4O" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', width: '100%' }}>
+                            <LocationMap
+                                location="Yazh Silambam Academy"
+                                coordinates="Salem, Tamil Nadu"
+                            />
+                        </a>
+                    </div>
                 </div>
             </section>
+
+
+            {/* Background Watermark */}
+            <div className="contact-watermark" aria-hidden="true">
+                SINCE 2021
+            </div>
         </div>
     );
 };

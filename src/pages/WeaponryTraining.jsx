@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import MaskHero from '../components/MaskHero';
+
 
 const weapons = [
   {
@@ -41,43 +43,47 @@ const weapons = [
 
 const WeaponryTraining = () => {
   return (
-    <div className="page-container container">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8"
-      >
-        <h1 className="section-title">Weaponry Training</h1>
-        <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
-          Advanced levels introduce <span className="text-gold">traditional weapons</span> beyond the basic
-          staff, drawing from Tamil warrior heritage for deeper combat mastery and cultural expression.
-        </p>
-      </motion.div>
+    <div className="page-container" style={{ padding: 0 }}>
+      <MaskHero title="WEAPONRY" subtitle="TRAINING" imageSrc="/Weaponry Training.png" />
 
-      <div className="stick-showcase-surface mt-8">
-        {weapons.map((weapon, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.08 }}
-            viewport={{ once: true }}
-            className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
-          >
-            <div className="stick-showcase-media">
-              <img
-                src={weapon.image}
-                alt={weapon.title}
-                className="stick-showcase-image"
-              />
-            </div>
-            <div className="stick-showcase-content">
-              <h2 className="stick-showcase-title">{weapon.title}</h2>
-              <p className="stick-showcase-desc">{weapon.desc}</p>
-            </div>
-          </motion.div>
-        ))}
+      <div className="container" style={{ marginTop: '1rem' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+          <h1 className="section-title">Weaponry Training</h1>
+          <p className="about-text" style={{ maxWidth: '750px', margin: '2rem auto 0' }}>
+            Advanced levels introduce <span className="text-gold">traditional weapons</span> beyond the basic
+            staff, drawing from Tamil warrior heritage for deeper combat mastery and cultural expression.
+          </p>
+        </motion.div>
+
+        <div className="stick-showcase-surface mt-8">
+          {weapons.map((weapon, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.08 }}
+              viewport={{ once: true }}
+              className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
+            >
+              <div className="stick-showcase-media">
+                <img
+                  src={weapon.image}
+                  alt={weapon.title}
+                  className="stick-showcase-image"
+                />
+              </div>
+              <div className="stick-showcase-content">
+                <h2 className="stick-showcase-title">{weapon.title}</h2>
+                <p className="stick-showcase-desc">{weapon.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );
