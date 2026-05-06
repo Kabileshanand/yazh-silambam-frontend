@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Instagram, Youtube } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import LocationMap from '../components/LocationMap';
 
 const Contact = () => {
@@ -15,43 +14,26 @@ const Contact = () => {
         const phone = formData.get('phone')?.toString().trim() || '';
         const message = formData.get('message')?.toString().trim() || '';
 
-        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+        const whatsappNumber = '919360282959'; // Academy WhatsApp number
 
-        if (!serviceId || !templateId || !publicKey) {
-            setSubmitState({
-                type: 'error',
-                message: 'Email service is not configured. Please add EmailJS keys in environment variables.'
-            });
-            return;
+        let whatsappMessage = `*New Enquiry from Website*\n\n`;
+        whatsappMessage += `*Name:* ${name}\n`;
+        whatsappMessage += `*Phone:* ${phone}\n`;
+        if (email) {
+            whatsappMessage += `*Email:* ${email}\n`;
         }
+        whatsappMessage += `\n*Message:*\n${message}`;
 
-        setSubmitState({ type: 'loading', message: 'Sending enquiry...' });
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-        emailjs
-            .send(
-                serviceId,
-                templateId,
-                {
-                    to_email: 'yazhsilambam2022@gmail.com',
-                    from_name: name,
-                    from_email: email,
-                    phone,
-                    message,
-                },
-                { publicKey }
-            )
-            .then(() => {
-                setSubmitState({ type: 'success', message: 'Enquiry sent successfully.' });
-                event.currentTarget.reset();
-            })
-            .catch(() => {
-                setSubmitState({
-                    type: 'error',
-                    message: 'Failed to send enquiry. Please try again.'
-                });
-            });
+        window.open(whatsappUrl, '_blank');
+        
+        event.currentTarget.reset();
+        setSubmitState({ type: 'success', message: 'Opening WhatsApp...' });
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => setSubmitState({ type: '', message: '' }), 3000);
     };
 
     return (
@@ -106,7 +88,7 @@ const Contact = () => {
                     <form className="contact-form" onSubmit={handleInquirySubmit}>
                         <div className="contact-form-row">
                             <input type="text" name="name" placeholder="Name" required />
-                            <input type="email" name="email" placeholder="Email" required />
+                            <input type="email" name="email" placeholder="Email (Optional)" />
                         </div>
                         <div className="contact-form-row">
                             <input type="tel" name="phone" placeholder="Phone" required />
