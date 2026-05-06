@@ -4,6 +4,7 @@ import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Contact from './Contact';
 import CircularFeatures from '../components/CircularFeatures';
+import AboutUsSection from '../components/AboutUsSection';
 
 const Home = () => {
     const [isMobile, setIsMobile] = useState(false);
@@ -97,42 +98,7 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Why Choose Yazh Silambam */}
-            <section className="section-padding">
-                <div className="container">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        viewport={{ once: true }}
-                        className="glass-panel"
-                    >
-                        <motion.h2 
-                            className="section-title swing-text-reveal"
-                            initial={{ backgroundPosition: "100% 0%" }}
-                            whileInView={{ backgroundPosition: "0% 0%" }}
-                            transition={{ duration: 1.2, ease: "easeOut" }}
-                            viewport={{ once: true, margin: "-50px" }}
-                        >
-                            Why Choose Yazh Silambam?
-                        </motion.h2>
-                        <ul className="why-choose-list" style={{ listStyle: 'none', padding: 0, marginTop: '1.5rem', textAlign: 'center' }}>
-                            {[
-                                { icon: "✓", text: "Experienced instructors" },
-                                { icon: "✓", text: "Beginner to advanced levels" },
-                                { icon: "✓", text: "Separate methods for kids / women / adults" },
-                                { icon: "✓", text: "Focus on discipline & anti-bullying confidence" },
-                                { icon: "✓", text: "Regular events, demos & competitions" }
-                            ].map((item, index) => (
-                                <li key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '1rem', fontSize: '1.1rem' }}>
-                                    <span style={{ color: 'var(--accent-gold)', fontWeight: 'bold' }}>{item.icon}</span>
-                                    <span style={{ color: '#e5e5e5' }}>{item.text}</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </motion.div>
-                </div>
-            </section>
+            <AboutUsSection />
 
             {/* Coach */}
             <section className="section-padding">
