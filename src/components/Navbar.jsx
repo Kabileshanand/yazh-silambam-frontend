@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import MotionButton from './MotionButton';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -66,45 +66,14 @@ const Navbar = () => {
                     ))}
                 </div>
                 
-                <Link to="/login" className="btn-primary nav-btn" style={{ zIndex: 10 }}>
-                    <span className="nav-btn-small">Portal Login</span>
-                </Link>
+                <MotionButton 
+                    label="Portal Login" 
+                    to="/login"
+                    className="nav-btn-motion" 
+                />
 
-                {/* Mobile Toggle */}
-                <button className="mobile-toggle" onClick={() => setIsOpen(!isOpen)} style={{ zIndex: 10 }}>
-                    {isOpen ? <X /> : <Menu />}
-                </button>
+
             </div>
-
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div 
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="mobile-menu glass-panel"
-                    >
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.name}
-                                to={link.path}
-                                className={`mobile-link ${isActive(link.path) ? 'active' : ''}`}
-                                onClick={() => setIsOpen(false)}
-                            >
-                                {link.name}
-                            </Link>
-                        ))}
-                        <Link
-                            to="/login"
-                            className="btn-primary mobile-btn"
-                            onClick={() => setIsOpen(false)}
-                        >
-                            Portal Login
-                        </Link>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </nav>
     );
 };

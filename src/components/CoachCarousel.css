@@ -1,0 +1,232 @@
+/* CoachCarousel.css */
+
+.coach-carousel-section {
+    padding: 8rem 0;
+    overflow: hidden;
+    background: transparent;
+    /* Deep black background like screenshot */
+    color: white;
+}
+
+.orbit-title-wrap {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.coach-orbit-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.orbit-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+}
+
+.orbit-ring-path {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* Center Card - Styled exactly like the screenshot */
+.orbit-center-card {
+    position: absolute;
+    z-index: 20;
+    background: #0a0c10;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    padding-top: 3.5rem;
+    /* Space for the overlapping avatar */
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.center-card-avatar-wrap {
+    position: absolute;
+    top: -40px;
+    /* Offset to overlap half of the avatar */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    padding: 3px;
+    background: #0a0c10;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.center-card-img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.center-card-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: white;
+}
+
+.center-card-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    /* Muted slate */
+    margin-bottom: 0.4rem;
+}
+
+.icon-muted {
+    opacity: 0.6;
+}
+
+.center-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.card-nav-arrow {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.card-nav-arrow:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.connect-btn {
+    background: #ba0f16;
+    /* Indigo/Purple like screenshot */
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.connect-btn:hover {
+    background: #ba0f16;
+    transform: translateY(-1px);
+}
+
+/* Orbiting Avatars */
+.orbiting-avatar-wrap {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.orbit-avatar-img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.orbit-avatar-img:hover {
+    transform: scale(1.15);
+    border-color: #4f46e5;
+}
+
+.orbit-avatar-img.active {
+    border-color: #4f46e5;
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+    transform: scale(1.1);
+}
+
+/* Main Nav Arrows (Large Side Arrows) */
+.main-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 25;
+}
+
+.main-nav-btn:hover {
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.main-nav-btn.prev {
+    left: 0;
+}
+
+.main-nav-btn.next {
+    right: 0;
+}
+
+/* Progress Dots */
+.orbit-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}
+
+.orbit-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.orbit-dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Responsive Scaling */
+@media (max-width: 768px) {
+    .main-nav-btn {
+        display: none;
+    }
+}

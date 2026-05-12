@@ -1,0 +1,216 @@
+/* CoachSection.css */
+
+.team-card-container {
+  position: relative;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  padding: 0 1.5rem;
+}
+
+.job-position-label {
+  margin-bottom: 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.card-flex-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+.rotate-180 {
+  --arrow-rot: 180deg;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.portrait-container {
+  position: relative;
+  height: 400px;
+  width: 300px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.portrait-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent, transparent);
+}
+
+.portrait-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portrait-container:hover .portrait-img {
+  transform: scale(1.05);
+}
+
+.info-block {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  flex: 1;
+  min-width: 0;
+  /* Allow shrinking */
+}
+
+.card-left .info-block {
+  margin-left: 2.0rem;
+  /* Pushing text right to avoid overlap */
+  padding-right: 3rem;
+  /* Push text away from right edge */
+}
+
+.card-right .info-block {
+  margin-right: -1.5rem;
+  padding-left: 3rem;
+  /* Push text away from left edge */
+}
+
+.display-name {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  line-height: 1.2;
+  font-weight: 200;
+  letter-spacing: -0.025em;
+  color: #fff;
+  overflow-wrap: break-word;
+}
+
+.last-name {
+  font-weight: 600;
+}
+
+.details-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.cta-circle {
+  display: flex;
+  height: 4rem;
+  width: 4rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.cta-circle:hover {
+  border-color: #ba0f16;
+  background: #ba0f16;
+}
+
+.cta-arrow {
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+  transform: rotate(var(--arrow-rot, 0deg));
+}
+
+.cta-circle:hover .cta-arrow {
+  transform: rotate(calc(var(--arrow-rot, 0deg) - 45deg));
+  color: #fff;
+}
+
+
+.bio-container {
+  max-width: 380px;
+}
+
+.bio-text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1024px) {
+  .team-card-container {
+    margin: 2rem auto !important;
+    width: 95%;
+    padding: 0;
+  }
+
+  .info-block {
+    width: 100%;
+    margin: 1.5rem 0 0 0 !important;
+    padding: 0 !important;
+    gap: 1.5rem;
+  }
+
+  .card-flex-wrapper {
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+
+  .portrait-container {
+    width: 100%;
+    height: 400px;
+  }
+
+  .display-name {
+    font-size: 2.2rem;
+  }
+
+  .job-position-label {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .details-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .cta-circle {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  .bio-container {
+    max-width: 100%;
+  }
+
+  .bio-text {
+    text-align: left !important;
+  }
+}

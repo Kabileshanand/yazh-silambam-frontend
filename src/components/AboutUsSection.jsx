@@ -111,10 +111,10 @@ export default function AboutUsSection() {
   ];
 
   const stats = [
-    { icon: <Users />, value: 60, label: "Active Students", suffix: "+" },
-    { icon: <Target />, value: 500, label: "Techniques Mastered", suffix: "+" },
-    { icon: <Calendar />, value: 8, label: "Years Teaching", suffix: "" },
-    { icon: <TrendingUp />, value: 95, label: "Student Retention", suffix: "%" },
+    { icon: <Users />, value: 150, label: "Students Trained", suffix: "+" },
+    { icon: <Target />, value: 40, label: "Girls & Women Trained", suffix: "+" },
+    { icon: <Calendar />, value: 20, label: "Achievers", suffix: "+" },
+    { icon: <TrendingUp />, value: 20, label: "Cultural Performances", suffix: "+" },
   ];
 
   return (
@@ -184,7 +184,9 @@ export default function AboutUsSection() {
         </motion.div>
 
         <motion.p className="about-description" variants={itemVariants}>
-          We are a dedicated team of Silambam masters and instructors committed to preserving and teaching this ancient Tamil martial art. With passionate students and unwavering dedication to traditional techniques, we transform beginners into skilled practitioners while honoring our rich cultural heritage.
+          Yazh Silambam Academy is a passionate Silambam academy dedicated to preserving and promoting the ancient Tamil martial art. We are committed to training students in authentic traditional techniques while building discipline, fitness, confidence, and cultural pride.
+          With a team of experienced coaches, we offer structured training for kids, youth, women, and adults. Our focus goes beyond just techniques, we aim to shape strong character and responsible individuals through the rich legacy of Silambam.
+          Whether you seek self-defense, physical fitness, competitive training, or cultural performance, we welcome you to be part of our growing family.
         </motion.p>
 
         <div className="about-grid">
@@ -216,33 +218,7 @@ export default function AboutUsSection() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
               >
-                <img
-                  src="/About Us.jpeg"
-                  alt="Yazh Silambam Training"
-                  className="about-main-img"
-                  onError={(e) => {
-                    // fallback to some placeholder if the image doesn't exist yet
-                    e.target.src = "/images/weaponry/Kendai Kodari.jpg";
-                  }}
-                />
-                <motion.div
-                  className="about-image-overlay"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.9 }}
-                >
-                  <motion.button
-                    className="about-portfolio-btn"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                      const el = document.getElementById("who-we-are");
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Our Achievements <ArrowRight className="w-4 h-4" />
-                  </motion.button>
-                </motion.div>
+                {/* Video placeholder - User will upload a video here later */}
               </motion.div>
 
               {/* Floating accent elements */}

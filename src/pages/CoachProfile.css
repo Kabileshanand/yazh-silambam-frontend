@@ -1,0 +1,168 @@
+/* CoachProfile.css */
+
+.coach-profile-page {
+    min-height: 100vh;
+    background: #000;
+    color: white;
+    padding: 100px 2rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.back-btn {
+    position: absolute;
+    top: 120px;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    z-index: 10;
+}
+
+.back-btn:hover {
+    color: #ba0f16;
+}
+
+.coach-profile-container {
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 2rem;
+}
+
+/* Desktop View */
+.coach-desktop-view {
+    display: none;
+    position: relative;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .coach-desktop-view {
+        display: flex;
+    }
+}
+
+.coach-avatar-wrapper {
+    width: 470px;
+    height: 470px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.coach-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.coach-info-card {
+    background: #0d0d0d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+    padding: 3.5rem;
+    margin-left: -80px;
+    z-index: 10;
+    flex: 1;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+    position: relative;
+}
+
+.coach-card-header {
+    margin-bottom: 1.5rem;
+}
+
+.coach-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+    color: white;
+}
+
+.coach-role {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ba0f16;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.coach-bio {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2.5rem;
+}
+
+.coach-social-links {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.coach-social-circle {
+    width: 48px;
+    height: 48px;
+    background: white;
+    color: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.coach-social-circle:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: #ba0f16;
+    color: white;
+}
+
+/* Mobile View */
+.coach-mobile-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .coach-mobile-view {
+        display: none;
+    }
+}
+
+.coach-mobile-avatar {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    background: #1a1a1a;
+}
+
+.coach-mobile-content .coach-name {
+    font-size: 2rem;
+}
+
+.coach-mobile-content .coach-bio {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.justify-center {
+    justify-content: center;
+}

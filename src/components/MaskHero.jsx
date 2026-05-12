@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const MaskHero = ({ title, subtitle, imageSrc }) => {
+const MaskHero = ({ title, subtitle, imageSrc, centerImage }) => {
     const container = useRef(null);
     const { scrollYProgress } = useScroll({
         target: container,
@@ -86,6 +86,36 @@ const MaskHero = ({ title, subtitle, imageSrc }) => {
                         <rect width="100%" height="100%" fill="#0c0c0c" mask="url(#textMask)" />
                     </svg>
                 </motion.div>
+
+                {/* Central Logo Overlay - Positioned on Top Layer */}
+                {centerImage && (
+                    <motion.div
+                        style={{
+                            position: 'absolute',
+                            top: '45%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '200px',
+                            height: '200px',
+                            zIndex: 20,
+                            pointerEvents: 'none'
+                        }}
+                        initial={{ opacity: 0, scale: 0.8, x: '-50%', y: '-50%' }}
+                        animate={{ opacity: 1, scale: 1, x: '-50%', y: '-50%' }}
+                        transition={{ duration: 1, delay: 0.5 }}
+                    >
+                        <img 
+                            src={centerImage} 
+                            alt="Logo" 
+                            style={{ 
+                                width: '100%', 
+                                height: '100%', 
+                                objectFit: 'contain',
+                                filter: 'drop-shadow(0 0 25px rgba(0,0,0,0.9))'
+                            }} 
+                        />
+                    </motion.div>
+                )}
             </div>
         </div>
     );

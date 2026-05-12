@@ -11,9 +11,11 @@ import Signup from './pages/Signup';
 import BareHandTechniques from './pages/BareHandTechniques';
 import StickFencing from './pages/StickFencing';
 import WeaponryTraining from './pages/WeaponryTraining';
+import CoachProfile from './pages/CoachProfile';
 
 import ScrollToTop from './components/ScrollToTop';
 import IntroVideo from './components/IntroVideo';
+import MobileNavbar from './components/MobileNavbar';
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
       <IntroVideo />
       <div className="app-container">
         <Navbar />
+        <MobileNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/events" element={<Events />} />
@@ -33,6 +36,7 @@ function App() {
           <Route path="/bare-hand-techniques" element={<BareHandTechniques />} />
           <Route path="/stick-fencing" element={<StickFencing />} />
           <Route path="/weaponry-training" element={<WeaponryTraining />} />
+          <Route path="/coach/:id" element={<CoachProfile />} />
         </Routes>
       </div>
     </Router>

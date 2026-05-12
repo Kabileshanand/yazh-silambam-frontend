@@ -1,6 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
 import MaskHero from '../components/MaskHero';
+import NeuralNoise from '../components/NeuralNoise';
 
 
 const techniques = [
@@ -33,8 +32,14 @@ const techniques = [
 
 const BareHandTechniques = () => {
   return (
-    <div className="page-container" style={{ padding: 0 }}>
-      <MaskHero title="BARE HAND" subtitle="TECHNIQUES" imageSrc="/Barehand Technique.png" />
+    <div className="page-container" style={{ padding: 0, position: 'relative', background: 'transparent' }}>
+      <NeuralNoise color={[0.9, 0.1, 0.1]} opacity={0.6} speed={0.0003} />
+      <MaskHero 
+        title="BARE HAND" 
+        subtitle="TECHNIQUES" 
+        imageSrc="/Barehand Technique.png" 
+        centerImage="/Yazhlogo.png"
+      />
 
       <div className="container" style={{ marginTop: '1rem' }}>
         <motion.div

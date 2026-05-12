@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Instagram, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import LocationMap from '../components/LocationMap';
 
-const Contact = () => {
+const Contact = ({ showHero = true }) => {
     const [submitState, setSubmitState] = useState({ type: '', message: '' });
 
     const handleInquirySubmit = (event) => {
@@ -38,6 +39,23 @@ const Contact = () => {
 
     return (
         <div className="contact-page">
+            {/* First Page: Hero Image Section */}
+            {showHero && (
+                <section className="contact-hero-section">
+                    <img src="/contact-bg.jpg" alt="Contact Us" className="contact-hero-img" />
+                    <div className="contact-hero-overlay">
+                        <motion.h1 
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            Get In Touch
+                        </motion.h1>
+                    </div>
+                </section>
+            )}
+
+            {/* Second Page: Existing Contact Content */}
             <section className="contact-panel">
                 <div className="contact-left">
                     <h1 className="contact-title">
@@ -127,7 +145,6 @@ const Contact = () => {
                     </div>
                 </div>
             </section>
-
 
             {/* Background Watermark */}
             <div className="contact-watermark" aria-hidden="true">

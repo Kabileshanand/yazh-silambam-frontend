@@ -1,0 +1,258 @@
+/* FeatureCarousel.css */
+
+.feature-carousel-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.feature-carousel-main {
+    position: relative;
+    overflow: hidden;
+    border-radius: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0a0a0a;
+}
+
+@media (min-width: 1024px) {
+    .feature-carousel-main {
+        flex-direction: row;
+        aspect-ratio: 16 / 9;
+    }
+}
+
+/* Sidebar */
+.feature-carousel-sidebar {
+    width: 100%;
+    min-height: 350px;
+    background: #ba0f16; /* Academy Red */
+    position: relative;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centered */
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .feature-carousel-sidebar {
+        width: 40%;
+        height: 100%;
+        padding: 0;
+    }
+}
+
+.sidebar-gradient-top,
+.sidebar-gradient-bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 80px;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.sidebar-gradient-top {
+    top: 0;
+    background: linear-gradient(to bottom, #ba0f16, rgba(186, 15, 22, 0.8), transparent);
+}
+
+.sidebar-gradient-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, #ba0f16, rgba(186, 15, 22, 0.8), transparent);
+}
+
+.sidebar-chips-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+}
+
+@media (min-width: 1024px) {
+    .sidebar-chips-wrapper {
+        justify-content: flex-start;
+    }
+}
+
+.sidebar-chip-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centered */
+}
+
+.feature-chip {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: left;
+    transition: all 0.5s ease;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.feature-chip.active {
+    background: white;
+    color: #ba0f16;
+    border-color: white;
+    z-index: 10;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.chip-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.5s ease;
+}
+
+.feature-chip.active .chip-icon {
+    color: #ba0f16;
+}
+
+.chip-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Content Area */
+.feature-carousel-content {
+    flex: 1;
+    min-height: 500px;
+    background: rgba(255, 255, 255, 0.02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1024px) {
+    .feature-carousel-content {
+        height: 100%;
+        border-top: 0;
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+.cards-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    aspect-ratio: 1.27 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-card {
+    position: absolute;
+    inset: 0;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #000;
+    transform-origin: center;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+
+.feature-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: all 0.7s ease;
+}
+
+.feature-card-img.inactive {
+    filter: grayscale(100%) blur(2px) brightness(0.6);
+}
+
+.feature-card-info {
+    position: absolute;
+    inset: 0;
+    bottom: 0;
+    padding: 2.5rem;
+    padding-top: 6rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: none;
+}
+
+.feature-number-badge {
+    background: white;
+    color: black;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    width: fit-content;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.feature-card-description {
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.feature-card-status {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card-status.visible {
+    opacity: 1;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 10px white;
+}
+
+.status-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+}
+
+.feature-card.cursor-pointer {
+    cursor: pointer;
+}
