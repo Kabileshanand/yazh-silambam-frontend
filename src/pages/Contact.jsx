@@ -29,10 +29,10 @@ const Contact = ({ showHero = true }) => {
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
         window.open(whatsappUrl, '_blank');
-        
+
         event.currentTarget.reset();
         setSubmitState({ type: 'success', message: 'Opening WhatsApp...' });
-        
+
         // Clear success message after 3 seconds
         setTimeout(() => setSubmitState({ type: '', message: '' }), 3000);
     };
@@ -44,12 +44,12 @@ const Contact = ({ showHero = true }) => {
                 <section className="contact-hero-section">
                     <img src="/contact-bg.jpg" alt="Contact Us" className="contact-hero-img" />
                     <div className="contact-hero-overlay">
-                        <motion.h1 
+                        <motion.h1
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
                         >
-                            Get In Touch
+                            Contact Us
                         </motion.h1>
                     </div>
                 </section>
@@ -134,7 +134,7 @@ const Contact = ({ showHero = true }) => {
                             </p>
                         )}
                     </form>
-                    
+
                     <div style={{ marginTop: '3rem', zIndex: 10, position: 'relative', display: 'flex', justifyContent: 'center' }}>
                         <a href="https://share.google/rWPyEpAGgRpQE2f4O" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', width: '100%' }}>
                             <LocationMap
