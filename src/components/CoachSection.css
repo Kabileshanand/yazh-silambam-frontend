@@ -45,6 +45,10 @@
   --arrow-rot: 180deg;
 }
 
+.rotate-360 {
+  --arrow-rot: 360deg;
+}
+
 .text-right {
   text-align: right;
 }

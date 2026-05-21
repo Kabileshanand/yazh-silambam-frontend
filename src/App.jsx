@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Events from './pages/Events';
@@ -16,10 +16,12 @@ import CoachProfile from './pages/CoachProfile';
 import ScrollToTop from './components/ScrollToTop';
 import IntroVideo from './components/IntroVideo';
 import MobileNavbar from './components/MobileNavbar';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
   return (
     <Router>
+      <LoadingScreen />
       <ScrollToTop />
       <IntroVideo />
       <div className="app-container">

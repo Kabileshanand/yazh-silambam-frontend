@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Award } from 'lucide-react';
-import AnimatedCanvas from '../components/AnimatedCanvas';
+import SilkShader from '../components/SilkShader';
 
 const normalizeName = (value) =>
     value.toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -132,9 +132,9 @@ const Achievements = () => {
     ];
 
     return (
-        <div className="achievements-page">
+        <div className="achievements-page" style={{ position: 'relative' }}>
 
-            <AnimatedCanvas />
+        <SilkShader />
 
             {/* ── Hero Banner Image ── */}
             <div className="achievements-hero-banner">
@@ -151,8 +151,22 @@ const Achievements = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h1 className="achievements-hero-title">Wall of Fame</h1>
-                    <p className="achievements-hero-subtitle">Celebrating Our Champions & Their Remarkable Milestones</p>
+                    <motion.h1
+                        className="achievements-hero-title swing-text-reveal"
+                        initial={{ backgroundPosition: '100% 0%' }}
+                        animate={{ backgroundPosition: '0% 0%' }}
+                        transition={{ duration: 1.4, ease: 'easeOut', delay: 0.2 }}
+                    >
+                        Wall of Fame
+                    </motion.h1>
+                    <motion.p
+                        className="achievements-hero-subtitle"
+                        initial={{ opacity: 0, letterSpacing: '0.4em' }}
+                        animate={{ opacity: 1, letterSpacing: '0.05em' }}
+                        transition={{ duration: 1.2, ease: 'easeOut', delay: 0.6 }}
+                    >
+                        Celebrating Our Champions &amp; Their Remarkable Milestones
+                    </motion.p>
                 </motion.div>
             </div>
 

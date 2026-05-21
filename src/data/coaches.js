@@ -9,23 +9,23 @@ export const coaches = [
   },
   {
     id: 2,
+    name: "Manoj Sakthi Viswanathan",
+    role: "Assist Coach",
+    bio: "An expert in weapon combinations and combat sequences, assisting the head coach in advanced training sessions.",
+    profile: "/Manoj.jpeg?v=1",
+  },
+  {
+    id: 3,
     name: "Kabilesh Premanand",
     role: "Assist Coach",
     bio: "With more than 15 years in Silambam and over 5 years of teaching experience, Kabilesh P is a highly skilled trainer. Formerly a Silambam coach at SNS Academy, Coimbatore, he has represented Tamil Nadu at the state level.He is specially respected for his mastery in bare-hand techniques and practical self-defense applications.",
     profile: "/Kabilesh.jpeg?v=1",
   },
   {
-    id: 3,
+    id: 4,
     name: "Bavishya Srinivasan",
     role: "Trainer",
     bio: "Bavishya S brings grace, power, and competitive excellence to the academy. With over 10 years of dedicated practice, she has won numerous district and state championships and was selected to represent Tamil Nadu in the National Silambam Championship in 2022.She specializes in both traditional forms and performance-style Silambam, inspiring many young girls and women to take up the art",
     profile: "/Bavishya.jpeg?v=1",
-  },
-  {
-    id: 4,
-    name: "Manoj Sakthi Viswanathan",
-    role: "Assist Coach",
-    bio: "An expert in weapon combinations and combat sequences, assisting the head coach in advanced training sessions.",
-    profile: "/Manoj.jpeg?v=1",
   },
 ];

@@ -285,7 +285,7 @@ h6 {
   position: fixed;
   width: 100%;
   z-index: 1000;
-  top: 0;
+  top: -2px;
   left: 0;
   padding: 1rem 0;
 }
@@ -455,48 +455,25 @@ h6 {
   padding: 0.75rem 1.5rem;
 }
 
-/* Liquid glass theme (navbar) */
+/* Liquid glass theme (navbar) - Diven Pill Style */
 .nav-container.glass-panel {
   position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  background:
-    radial-gradient(120% 140% at 12% 0%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(255, 255, 255, 0.02) 100%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(186, 60, 60, 0.06) 40%, rgba(74, 4, 4, 0.10) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  overflow: visible;
+  /* so glowing indicator line isn't cut off */
+  border-radius: 9999px;
+  background: rgba(10, 10, 15, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
-    0 12px 45px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(26px) saturate(1.35);
-  -webkit-backdrop-filter: blur(26px) saturate(1.35);
+    0 15px 35px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  margin-top: 1rem;
 }
 
-.nav-container.glass-panel::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background:
-    linear-gradient(120deg,
-      rgba(255, 255, 255, 0.35) 0%,
-      rgba(255, 255, 255, 0.06) 25%,
-      rgba(235, 76, 76, 0.20) 55%,
-      rgba(255, 255, 255, 0.10) 80%,
-      rgba(255, 255, 255, 0.22) 100%);
-  opacity: 0.28;
-  pointer-events: none;
-  filter: blur(18px);
-  mix-blend-mode: screen;
-}
-
+.nav-container.glass-panel::before,
 .nav-container.glass-panel::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(80% 90% at 20% 15%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.00) 55%),
-    radial-gradient(60% 80% at 80% 70%, rgba(235, 76, 76, 0.10) 0%, rgba(255, 255, 255, 0.00) 60%);
-  opacity: 0.55;
+  display: none;
 }
 
 .nav-brand,
@@ -838,7 +815,8 @@ h6 {
 .home-page>*:not(.cover-hero-sticky) {
   position: relative;
   z-index: 2;
-  background: var(--bg-primary, #0a0c12);
+  /* Reduced opacity so the NeuralNoise background animation is visible */
+  background: rgba(10, 12, 18, 0.65);
 }
 
 .hero-section {
@@ -1390,6 +1368,62 @@ h6 {
 }
 
 
+
+/* ── Floating Back Button ── */
+.back-home-floating-container {
+  position: fixed;
+  top: 7rem;
+  left: 1.5rem;
+  z-index: 500;
+}
+
+.back-home-floating-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(10, 10, 15, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.6rem 1.2rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.back-home-floating-btn:hover {
+  background: var(--accent-gold);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(186, 15, 22, 0.5);
+  transform: translateY(-2px);
+}
+
+.back-home-floating-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.back-home-floating-btn:hover svg {
+  transform: translateX(-4px);
+}
+
+@media (max-width: 768px) {
+  .back-home-floating-container {
+    top: 6.8rem;
+    left: 1rem;
+  }
+
+  .back-home-floating-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
 /* ── Page Layout ── */
 .page-container {
   padding-top: 6rem;
@@ -1420,7 +1454,7 @@ h6 {
 
 /* ── Achievements / Wall of Fame Page ── */
 .achievements-page {
-  background: #000000;
+  background: transparent;
   min-height: 100vh;
   position: relative;
 }
@@ -1445,7 +1479,7 @@ h6 {
 
 .achievements-hero-banner {
   width: 100%;
-  margin-top: 80px;
+  margin-top: 110px;
   overflow: hidden;
   line-height: 0;
 }
@@ -1485,11 +1519,9 @@ h6 {
 
 .achievements-hero-title {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
-  color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 1rem;
-  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
 }
 
 .achievements-hero-subtitle {
@@ -1951,6 +1983,58 @@ textarea.form-input {
   flex-direction: column;
 }
 
+/* ── Third Section: Map + Since 2021 ── */
+.contact-map-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem 4rem;
+  overflow: hidden;
+  background: linear-gradient(to bottom, rgba(10, 12, 18, 0.9), rgba(10, 12, 18, 0.97));
+}
+
+.contact-since-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #ba0f16;
+  border: 1px solid rgba(186, 15, 22, 0.4);
+  padding: 0.4rem 1.2rem;
+  border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.contact-map-heading {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  color: #fff;
+  text-align: center;
+  margin-top: 150px;
+}
+
+.contact-map-subtext {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  letter-spacing: 0.05em;
+}
+
+.contact-map-wrapper {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 1;
+}
+
 .contact-watermark {
   position: absolute;
   top: 50%;
@@ -1978,6 +2062,16 @@ textarea.form-input {
     font-size: clamp(50px, 12vw, 100px);
   }
 }
+
+/* Watermark positioned at the top of the map section */
+.contact-watermark--top {
+  top: 3rem;
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  font-size: clamp(50px, 10vw, 130px);
+}
+
 
 .contact-hero-section {
   position: relative;
@@ -2206,6 +2300,104 @@ textarea.form-input {
 
 .contact-submit-status.error {
   color: #ffd0d0;
+}
+
+/* Contact Social Glass Box */
+.social-glass-box {
+  margin-top: 2.5rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 768px) {
+  .social-glass-box {
+    flex-direction: row;
+    gap: 0;
+  }
+}
+
+.social-box-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .social-box-column:first-child {
+    padding-left: 0;
+    padding-right: 2rem;
+  }
+
+  .social-box-column:last-child {
+    padding-right: 0;
+    padding-left: 2rem;
+  }
+}
+
+.social-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .social-divider {
+    width: 1px;
+    height: auto;
+    align-self: stretch;
+  }
+}
+
+.social-icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.social-box-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.social-box-desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.social-box-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fefefe;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.social-box-link:hover {
+  opacity: 0.8;
 }
 
 @media (max-width: 900px) {
@@ -3991,43 +4183,44 @@ textarea.form-input {
   display: inline-block;
 }
 
-/* ── Neumorphic Theme Switcher Navbar ── */
+/* ── Clean Dark Glass Links (Diven Style) ── */
 .nav-links-neumorphic {
-  background: #e8e8ed;
-  border-radius: 9999px;
-  padding: 0.35rem;
   display: flex;
+  gap: 2.5rem;
   position: relative;
-  box-shadow:
-    inset 4px 4px 8px rgba(209, 209, 217, 0.8),
-    inset -4px -4px 8px rgba(255, 255, 255, 0.9),
-    2px 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
 }
 
 .nav-link-neu {
-  color: #333333;
-  font-weight: 600;
-  padding: 0.7rem 1.8rem;
-  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  padding: 0.5rem 0;
   position: relative;
   z-index: 2;
   transition: color 0.3s ease;
   text-decoration: none;
   font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-link-neu:hover {
+  color: #ffffff;
 }
 
 .nav-link-neu.active {
-  color: #ba0f16;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .liquid-indicator-neu {
   position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  background: #f0f0f3;
-  box-shadow:
-    -4px -4px 10px rgba(255, 255, 255, 1),
-    4px 4px 10px rgba(209, 209, 217, 0.8);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   z-index: -1;
 }
 
@@ -4280,4 +4473,143 @@ textarea.form-input {
 
 .shadow-black\/5 {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* ── Fluid Expanding Grid ── */
+.fluid-gallery-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 3rem 0;
+}
+
+.fluid-gallery-wrapper {
+  width: 100%;
+  max-width: 64rem;
+  padding: 0;
+}
+
+.fluid-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  height: 380px;
+}
+
+@media (min-width: 640px) {
+  .fluid-grid {
+    height: 580px;
+  }
+}
+
+.fluid-grid-item {
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.fluid-mask-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #18181b;
+  border-radius: 32px;
+}
+
+.fluid-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 1s ease-in-out;
+}
+
+.fluid-image.selected {
+  object-position: center 35%;
+}
+
+.fluid-image.unselected {
+  object-position: center 50%;
+}
+
+.fluid-mask {
+  position: absolute;
+  inset: 0;
+  transition: background-color 0.7s ease;
+}
+
+.fluid-mask.selected {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.fluid-mask.unselected {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.fluid-content {
+  position: absolute;
+  inset: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #ffffff;
+  z-index: 10;
+  user-select: none;
+}
+
+.fluid-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 640px) {
+  .fluid-title {
+    font-size: 1.875rem;
+  }
+}
+
+.fluid-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 640px) {
+  .fluid-subtitle {
+    font-size: 0.875rem;
+  }
+}
+
+.fluid-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 32px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, transparent 60%);
+}
+
+.fluid-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 32px;
+  pointer-events: none;
+  transition: border-color 0.5s ease;
+}
+
+.fluid-grid-item:hover .fluid-border {
+  border-color: rgba(255, 255, 255, 0.25);
 }

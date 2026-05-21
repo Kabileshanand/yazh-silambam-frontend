@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import MaskHero from '../components/MaskHero';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { ParallaxFeatureList } from '../components/ParallaxFeatureSection';
 import NeuralNoise from '../components/NeuralNoise';
-
 
 const techniques = [
   {
@@ -21,13 +22,18 @@ const techniques = [
   },
   {
     title: 'Guru Vanakkam',
-    desc: 'Guru Vanakkam (or Sabai Vanakkam) is the traditional salutation and respect. Practitioners bow, touch the ground or staff, and pay homage to the guru, ancestors, and the art. It instills discipline, humility, gratitude, and mental focus, connecting students to Silambam\'s ancient Tamil heritage.',
+    desc: "Guru Vanakkam (or Sabai Vanakkam) is the traditional salutation and respect. Practitioners bow, touch the ground or staff, and pay homage to the guru, ancestors, and the art. It instills discipline, humility, gratitude, and mental focus, connecting students to Silambam's ancient Tamil heritage.",
     image: '/images/bare-hand/Guruvanakkam.jpg',
   },
   {
-    title: 'Adi Murai & Pidi Murai',
-    desc: 'Adi Murai ("hitting way") covers lethal striking techniques targeting vital points, while Pidi Murai ("grabbing way") focuses on locks, holds, throws, and grapples. Together, they form practical self-defense against grabs, chokes, or multiple attackers, emphasizing pressure points, joint manipulation, and quick neutralization for real-world protection.',
+    title: 'Adi Murai',
+    desc: "Adi Murai )Hitting way) is an ancient Tamil martial art emphasizing precise, lethal strikes to the body's vital points (varmam points). Practitioners train to deliver devastating blows to vulnerable areas such as nerve clusters, joints, and pressure points using fists, elbows, knees, and open-hand techniques. The system incorporates knowledge of human anatomy to maximize damage with minimal effort, making it highly effective for self-defense.",
     image: '/images/bare-hand/Adi Murai.jpg',
+  },
+  {
+    title: 'Pidi Murai',
+    desc: 'Pidi Murai (grabbing way) focuses on locks, holds, throws, and grapples. Together, they form practical self-defense against grabs, chokes, or multiple attackers, emphasizing pressure points, joint manipulation, and quick neutralization for real-world protection.',
+    image: '/images/bare-hand/Pidi Murai.jpg',
   },
 ];
 
@@ -36,6 +42,22 @@ const BareHandTechniques = () => {
     <div className="page-container" style={{ padding: 0, position: 'relative', background: 'transparent' }}>
       <NeuralNoise color={[0.9, 0.1, 0.1]} opacity={0.6} speed={0.0003} />
 
+      {/* Sticky floating back button */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="back-home-floating-container"
+      >
+        <Link
+          to="/"
+          state={{ scrollTo: 'what-we-provide' }}
+          className="back-home-floating-btn"
+        >
+          <ArrowLeft size={18} />
+          <span>Back to Home</span>
+        </Link>
+      </motion.div>
 
       <div className="container" style={{ marginTop: '8rem' }}>
         <motion.div
@@ -52,29 +74,8 @@ const BareHandTechniques = () => {
           </p>
         </motion.div>
 
-        <div className="stick-showcase-surface mt-8">
-          {techniques.map((technique, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              viewport={{ once: true }}
-              className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
-            >
-              <div className="stick-showcase-media">
-                <img
-                  src={technique.image}
-                  alt={technique.title}
-                  className="stick-showcase-image"
-                />
-              </div>
-              <div className="stick-showcase-content">
-                <h2 className="stick-showcase-title">{technique.title}</h2>
-                <p className="stick-showcase-desc">{technique.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+        <div style={{ marginTop: '2rem' }}>
+          <ParallaxFeatureList items={techniques} />
         </div>
       </div>
     </div>

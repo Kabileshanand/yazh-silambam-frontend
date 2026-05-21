@@ -42,8 +42,7 @@ const Navbar = () => {
             <div className="container nav-container glass-panel">
                 <a href="/" onClick={handleBrandClick} className="nav-brand" style={{ zIndex: 10 }}>
                     <img src="/logo.png" alt="Yazh Silamba Payirchiyagam" className="nav-logo" />
-                    <span className="font-tamil brand-text">Yazh</span>
-                    <span className="text-gold brand-text">Silambam Academy</span>
+                    <span className="font-tamil brand-text"><span className="text-gold">Yazh</span> Silambam Academy</span>
                 </a>
 
                 {/* Desktop Menu - Neumorphic Theme */}

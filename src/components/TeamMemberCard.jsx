@@ -81,7 +81,7 @@ export default function TeamMemberCard({
             >
               <ArrowRight
                 size={22}
-                className={cn('cta-arrow', isPositionRight && 'rotate-180')}
+                className={cn('cta-arrow', !isPositionRight ? 'rotate-180' : 'rotate-360')}
               />
             </motion.div>
 

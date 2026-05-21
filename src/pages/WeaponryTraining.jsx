@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
-import MaskHero from '../components/MaskHero';
+import { ParallaxFeatureList } from '../components/ParallaxFeatureSection';
 import NeuralNoise from '../components/NeuralNoise';
-
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const weapons = [
   {
@@ -46,8 +47,25 @@ const WeaponryTraining = () => {
     <div className="page-container" style={{ padding: 0, position: 'relative', background: 'transparent' }}>
       <NeuralNoise color={[0.9, 0.1, 0.1]} opacity={0.6} speed={0.0003} />
 
+      {/* Sticky floating back button */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="back-home-floating-container"
+      >
+        <Link
+          to="/"
+          state={{ scrollTo: 'what-we-provide' }}
+          className="back-home-floating-btn"
+        >
+          <ArrowLeft size={18} />
+          <span>Back to Home</span>
+        </Link>
+      </motion.div>
 
       <div className="container" style={{ marginTop: '8rem' }}>
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -61,29 +79,8 @@ const WeaponryTraining = () => {
           </p>
         </motion.div>
 
-        <div className="stick-showcase-surface mt-8">
-          {weapons.map((weapon, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              viewport={{ once: true }}
-              className={`stick-showcase ${index % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
-            >
-              <div className="stick-showcase-media">
-                <img
-                  src={weapon.image}
-                  alt={weapon.title}
-                  className="stick-showcase-image"
-                />
-              </div>
-              <div className="stick-showcase-content">
-                <h2 className="stick-showcase-title">{weapon.title}</h2>
-                <p className="stick-showcase-desc">{weapon.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+        <div style={{ marginTop: '3rem', marginBottom: '4rem' }}>
+          <ParallaxFeatureList items={weapons} />
         </div>
       </div>
     </div>

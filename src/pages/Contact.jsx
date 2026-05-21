@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Instagram, Youtube } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Instagram, Youtube, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import LocationMap from '../components/LocationMap';
 
-const Contact = ({ showHero = true }) => {
+const Contact = ({ showHero = true, isShow = true }) => {
     const [submitState, setSubmitState] = useState({ type: '', message: '' });
 
     const handleInquirySubmit = (event) => {
@@ -36,6 +36,7 @@ const Contact = ({ showHero = true }) => {
         // Clear success message after 3 seconds
         setTimeout(() => setSubmitState({ type: '', message: '' }), 3000);
     };
+
 
     return (
         <div className="contact-page">
@@ -77,28 +78,7 @@ const Contact = ({ showHero = true }) => {
                             +91 93602 82959
                         </a>
 
-                        <div className="contact-social">
-                            <a
-                                href="https://www.instagram.com/yazh_silambam?igsh=MXcwZWsyMWFleHp6dw=="
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-social-link"
-                                aria-label="Follow us on Instagram"
-                            >
-                                <Instagram size={18} />
-                                <span>Instagram</span>
-                            </a>
-                            <a
-                                href="https://youtube.com/@yazhsilambam?si=Rnyb8ZEMOC1jhhVL"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="contact-social-link"
-                                aria-label="Visit our YouTube channel"
-                            >
-                                <Youtube size={18} />
-                                <span>YouTube</span>
-                            </a>
-                        </div>
+
                     </div>
                 </div>
 
@@ -135,21 +115,90 @@ const Contact = ({ showHero = true }) => {
                         )}
                     </form>
 
-                    <div style={{ marginTop: '3rem', zIndex: 10, position: 'relative', display: 'flex', justifyContent: 'center' }}>
-                        <a href="https://share.google/rWPyEpAGgRpQE2f4O" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', width: '100%' }}>
-                            <LocationMap
-                                location="Yazh Silambam Academy"
-                                coordinates="Salem, Tamil Nadu"
-                            />
-                        </a>
+                    {/* Social Glass Box */}
+                    <div className="social-glass-box">
+                        <div className="social-box-column">
+                            <div className="social-icon-circle">
+                                <Instagram size={20} />
+                            </div>
+                            <h3 className="social-box-title">Follow on Instagram</h3>
+                            <p className="social-box-desc">
+                                Join our vibrant community and stay updated with our latest events and classes.
+                            </p>
+                            <a
+                                href="https://www.instagram.com/yazh_silambam?igsh=MXcwZWsyMWFleHp6dw=="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-box-link"
+                            >
+                                Join our Instagram <ArrowRight size={16} />
+                            </a>
+                        </div>
+                        <div className="social-divider"></div>
+                        <div className="social-box-column">
+                            <div className="social-icon-circle">
+                                <Youtube size={20} />
+                            </div>
+                            <h3 className="social-box-title">Subscribe on YouTube</h3>
+                            <p className="social-box-desc">
+                                Watch our latest tutorials, performances, and martial arts training.
+                            </p>
+                            <a
+                                href="https://youtube.com/@yazhsilambam?si=Rnyb8ZEMOC1jhhVL"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-box-link"
+                            >
+                                Visit our YouTube <ArrowRight size={16} />
+                            </a>
+                        </div>
                     </div>
+
+
                 </div>
             </section>
 
-            {/* Background Watermark */}
-            <div className="contact-watermark" aria-hidden="true">
-                SINCE 2021
-            </div>
+            {/* Third Section: Map + Since 2021 */}
+            {isShow && (
+            <section className="contact-map-section">
+                {/* Background Watermark at top */}
+                <div className="contact-watermark contact-watermark--top" aria-hidden="true">SINCE 2021</div>
+                <motion.h2
+                    className="contact-map-heading"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7 }}
+                    viewport={{ once: true }}
+                >
+                    Find Us Here
+                </motion.h2>
+                <motion.p
+                    className="contact-map-subtext"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.7, delay: 0.2 }}
+                    viewport={{ once: true }}
+                >
+                    Yazh Silambam Academy — Salem, Tamil Nadu
+                </motion.p>
+                <motion.div
+                    className="contact-map-wrapper"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.3 }}
+                    viewport={{ once: true }}
+                   
+
+                >
+                    <a href="https://share.google/rWPyEpAGgRpQE2f4O" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', width: '100%', display: 'block',  }}>
+                        <LocationMap
+                            location="Yazh Silambam Academy"
+                            coordinates="Salem, Tamil Nadu"
+                        />
+                    </a>
+                </motion.div>
+            </section>
+        )}
         </div>
     );
 };

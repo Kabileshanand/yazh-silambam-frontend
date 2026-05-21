@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
-import MaskHero from '../components/MaskHero';
+import { ParallaxFeatureList } from '../components/ParallaxFeatureSection';
 import NeuralNoise from '../components/NeuralNoise';
-
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const coreTechniques = [
   {
@@ -59,40 +60,30 @@ const alangara = [
   },
 ];
 
-const TechniqueList = ({ techniques, startIndex = 0 }) => (
-  <>
-    {techniques.map((technique, index) => (
-      <motion.div
-        key={index}
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: index * 0.08 }}
-        viewport={{ once: true }}
-        className={`stick-showcase ${(startIndex + index) % 2 !== 0 ? 'stick-showcase--reverse' : ''}`}
-      >
-        <div className="stick-showcase-media">
-          <img
-            src={technique.image}
-            alt={technique.title}
-            className="stick-showcase-image"
-          />
-        </div>
-        <div className="stick-showcase-content">
-          <h2 className="stick-showcase-title">{technique.title}</h2>
-          <p className="stick-showcase-desc">{technique.desc}</p>
-        </div>
-      </motion.div>
-    ))}
-  </>
-);
-
 const StickFencing = () => {
   return (
     <div className="page-container" style={{ padding: 0, position: 'relative', background: 'transparent' }}>
       <NeuralNoise color={[0.9, 0.1, 0.1]} opacity={0.6} speed={0.0003} />
 
+      {/* Sticky floating back button */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="back-home-floating-container"
+      >
+        <Link
+          to="/"
+          state={{ scrollTo: 'what-we-provide' }}
+          className="back-home-floating-btn"
+        >
+          <ArrowLeft size={18} />
+          <span>Back to Home</span>
+        </Link>
+      </motion.div>
 
       <div className="container" style={{ marginTop: '8rem' }}>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -113,13 +104,13 @@ const StickFencing = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-4"
+          className="mb-8 mt-12"
         >
           <h2 className="achievement-section-title">Silambam Core</h2>
         </motion.div>
 
-        <div className="stick-showcase-surface mt-4 mb-12">
-          <TechniqueList techniques={coreTechniques} startIndex={0} />
+        <div style={{ marginTop: '2rem', marginBottom: '4rem' }}>
+          <ParallaxFeatureList items={coreTechniques} startIndex={0} />
         </div>
 
         {/* Alangara Silambam */}
@@ -128,7 +119,7 @@ const StickFencing = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-4"
+          className="mb-8 mt-16"
         >
           <h2 className="achievement-section-title">Alangara Silambam</h2>
           <p className="achievement-section-subtitle">Decorative / Performance Silambam</p>
@@ -137,8 +128,8 @@ const StickFencing = () => {
           </p>
         </motion.div>
 
-        <div className="stick-showcase-surface mt-4">
-          <TechniqueList techniques={alangara} startIndex={0} />
+        <div style={{ marginTop: '2rem', marginBottom: '4rem' }}>
+          <ParallaxFeatureList items={alangara} startIndex={coreTechniques.length} />
         </div>
       </div>
     </div>

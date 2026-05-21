@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import FluidExpandingGrid from '../components/FluidExpandingGrid';
 
 const majorEvents = [
     "Salem Hastampatty Muniyappan Temple",
@@ -34,17 +35,24 @@ const Events = () => {
                 </motion.div>
 
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    className="events-mag-venues"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    style={{ marginTop: '6rem', padding: '0 clamp(1rem, 4vw, 3rem)' }}
                 >
-                    <div className="venue-grid">
-                        {majorEvents.map((event, idx) => (
-                            <div key={idx} className="venue-card">
-                                <p className="venue-name">{event}</p>
-                            </div>
-                        ))}
+                    <div className="events-mag-title" style={{ marginBottom: '1.5rem' }}>
+                        <span className="events-mag-title-top" style={{ color: '#111', fontSize: 'clamp(36px, 4vw, 54px)' }}>
+                            INTERACTIVE
+                        </span>
+                        <span className="events-mag-title-bottom" style={{ fontSize: 'clamp(32px, 3.5vw, 46px)' }}>
+                            SHOWCASE
+                        </span>
                     </div>
+                    <p className="about-text" style={{ color: '#333', maxWidth: '750px', marginBottom: '2rem', lineHeight: 1.6 }}>
+                        Click on the cards below to explore key event categories and highlights from our training sessions and tournament showcases.
+                    </p>
+                    <FluidExpandingGrid />
                 </motion.div>
             </div>
         </div>

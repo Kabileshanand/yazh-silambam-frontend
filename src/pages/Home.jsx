@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Contact from './Contact';
-import FeatureCarousel from '../components/FeatureCarousel';
+import { ImagesScrollingAnimation } from '../components/ImagesScrollingAnimation';
 import AboutUsSection from '../components/AboutUsSection';
 import CoachesSection from '../components/CoachesSection';
 import NeuralNoise from '../components/NeuralNoise';
@@ -12,6 +12,19 @@ import NeuralNoise from '../components/NeuralNoise';
 const Home = () => {
     const [isMobile, setIsMobile] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state?.scrollTo) {
+            setTimeout(() => {
+                const el = document.getElementById(location.state.scrollTo);
+                if (el) {
+                    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+            }, 100);
+        }
+    }, [location]);
 
     useEffect(() => {
         const mql = window.matchMedia('(max-width: 767px)');
@@ -59,9 +72,9 @@ const Home = () => {
 
 
             {/* What We Provide */}
-            <section className="section-padding bg-dark-overlay">
+            <section className="bg-dark-overlay pt-20" id="what-we-provide">
                 <div className="container">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-8">
                         <motion.h2
                             className="section-title swing-text-reveal"
                             initial={{ backgroundPosition: "100% 0%" }}
@@ -72,13 +85,13 @@ const Home = () => {
                             What We Provide
                         </motion.h2>
                     </div>
-                    <FeatureCarousel />
                 </div>
+                <ImagesScrollingAnimation />
             </section>
 
             <CoachesSection />
 
-            <Contact showHero={false} />
+            <Contact showHero={false} isShow={false}/>
         </div>
     );
 };

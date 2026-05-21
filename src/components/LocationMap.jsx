@@ -7,7 +7,7 @@ export function LocationMap({
   className = "",
 }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const containerRef = useRef(null);
 
   const mouseX = useMotionValue(0);
@@ -35,7 +35,7 @@ export function LocationMap({
   };
 
   const handleClick = () => {
-    setIsExpanded(!isExpanded);
+    setIsExpanded(isExpanded);
   };
 
   return (
@@ -67,7 +67,7 @@ export function LocationMap({
           background: 'rgba(20, 20, 25, 0.8)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
           backdropFilter: 'blur(10px)',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+          boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
         }}
         animate={{
           width: isExpanded ? 360 : 240,
@@ -85,11 +85,12 @@ export function LocationMap({
         <AnimatePresence>
           {isExpanded && (
             <motion.div
-              style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
+              style={{ position: 'absolute', inset: 0, pointerEvents: 'none',cursor: "progress" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.4, delay: 0.1 }}
+              
             >
               <div style={{ position: 'absolute', inset: 0, background: '#0a0a0a' }} />
 

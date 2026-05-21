@@ -18,7 +18,7 @@ const CoachProfile = () => {
 
   return (
     <div className="coach-profile-page">
-      <Link to="/" className="back-btn">
+      <Link to="/" state={{ scrollTo: 'meet-our-coaches' }} className="back-btn">
         <ArrowLeft size={20} />
         <span>Back to Home</span>
       </Link>

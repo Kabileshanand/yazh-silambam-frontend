@@ -8,7 +8,7 @@ export default function CoachesSection() {
   const navigate = useNavigate();
 
   return (
-    <section className="section-padding bg-dark-overlay">
+    <section className="section-padding bg-dark-overlay" id="meet-our-coaches">
       <div className="container">
         <div className="text-center mb-16">
           <motion.h2
